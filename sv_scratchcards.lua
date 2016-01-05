@@ -27,13 +27,13 @@ hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat 
  	if text == "/buyscratchcard" then
  		if ply:canAfford( ScratchCards.CardPrice ) then
  			local PlayerSteamID = tostring( ply:SteamID() )
- 			if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
- 				local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
+ 			if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".txt" ) then
+ 				local PlayerScratchCards = file.Read( PlayerSteamID..".txt" )
  				local PlayerNewScratchCards = tonumber( PlayerScratchCards ) + 1
- 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
+ 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".txt", PlayerNewScratchCards )
  				ply:addMoney( ScratchCards.CardPrice * -1 )
  			else
- 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", 1 ) --Give them one scratch card
+ 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".txt", 1 ) --Give them one scratch card
  			end
  		else
  			ply:ChatPrint( "You cannot afford this item!" )
@@ -45,14 +45,14 @@ hook.Add( "PlayerSay", "ScratchCardsUseCardHook", function( ply, text, teamChat 
  	if not IsValid( ply ) then return end
  	if text == "/scratch" then
  		local PlayerSteamID = tostring( ply:SteamID() )
- 		if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
- 			local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
+ 		if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".txt" ) then
+ 			local PlayerScratchCards = file.Read( PlayerSteamID..".txt" )
  			if PlayerScratchCards < 1 then
  				ply:ChatPrint( "You do not have any scratch cards!" )
  				return
  			end
  			local PlayerNewScratchCards = tonumber( PlayerScratchCards ) - 1
- 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
+ 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".txt", PlayerNewScratchCards )
  			GivePlayerScratchCardLoot( ply )
  		else
  			ply:ChatPrint( "You do not have any scratch cards!" )
