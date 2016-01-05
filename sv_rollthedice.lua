@@ -1,5 +1,7 @@
 util.AddNetworkString( "RTD_DrawDrugEffects" )
 
+thePlayer = LocalPlayer() or Player()
+
 RTD = {}
 RTD.Enabled = true --Keep this true
 RTD.CooldownTime = 20 --Cooldown time in seconds
@@ -21,49 +23,56 @@ function DisplayDiceMessage( ply, message_end )
 end
 
 function RTD_SpeedIncrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "became a cheetah!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetRunSpeed( 600 )
-	ply:SetWalkSpeed( 400 )
+	targetPly:SetRunSpeed( 600 )
+	targetPly:SetWalkSpeed( 400 )
 end
 
 function RTD_SpeedDecrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "became a snail!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetRunSpeed( 6 )
-	ply:SetWalkSpeed( 4 )
+	targetPly:SetRunSpeed( 6 )
+	targetPly:SetWalkSpeed( 4 )
 end
 
 function RTD_HealthIncrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "ate a lucky sandvich!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetHealth( 400 )
+	targetPly:SetHealth( 400 )
 end
 
 function RTD_HealthDecrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "became killable by a sneeze!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetHealth( 1 )
+	targetPly:SetHealth( 1 )
 end
 
 function RTD_JumpIncrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "became a bunny!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetJumpPower( 800 )
+	targetPly:SetJumpPower( 800 )
 end
 
 function RTD_JumpDecrease( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "became an anvil!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetJumpPower( 10 )
+	targetPly:SetJumpPower( 10 )
 end
 
 function RTD_Drugged( ply )
+	local targetPly = ply or thePlayer
 	local become_message = "took some of that good stuff!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetFOV( 160, 20 )
+	targetPly:SetFOV( 160, 20 )
 	net.Start( "RTD_DrawDrugEffects" )
-	net.Send( ply )
+	net.Send( targetPly )
 end
 
 function EnableRTD()
@@ -78,6 +87,7 @@ end
 function PickRandomRTD( ply )
 	local RandomNumber = math.random( 1, #RTD.Rolls )
 	local FuncToCall = RTD.Rolls[RandomNumber]
+	thePlayer = ply
 	timer.Simple( 0.1, FuncToCall )
 end
 
