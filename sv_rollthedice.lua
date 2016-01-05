@@ -1,6 +1,7 @@
 RTD = {}
+RTD.Enabled = true --Keep this true
 RTD.CooldownTime = 20 --Cooldown time in seconds
-RTD.Rolls = { --Use this to add more rolls but only if you crated the function beforehand
+RTD.Rolls = { --Use this to add more rolls but only if you created the function for the roll beforehand
 	[RTD_SpeedIncrease] = true
 	[RTD_SpeedDecrease] = true
 	[RTD_HealthIncrease] = true
@@ -37,3 +38,26 @@ end
 function RTD_JumpDecrease( ply )
 	local become_message = "took some of that good stuff!"
 end
+
+function EnableRTD()
+	RTD.Enabled = true
+end
+
+function DisableRTD()
+	RTD.Enabled = false	
+end
+
+function PickRandomRTD( ply )
+	local RandomNumber = math.random( 1, #RTD.Rolls )
+end
+
+hook.Add( "PlayerSay", "RollTheDiceCommandHook", function( ply, text, isTeam )
+	if not IsValid( ply ) then return end
+	if text = "!rtd" then
+		if RTD.Enabled then
+			PickRandomRTD( ply )
+		else
+			ply:ChatPrint( "Please wait before rolling the dice." )
+		end
+	end
+end )
