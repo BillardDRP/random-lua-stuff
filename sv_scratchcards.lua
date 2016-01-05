@@ -11,6 +11,10 @@ if not file.Exists( "darkrp_scratch_cards" ) then
 	file.CreateDir( "darkrp_scratch_cards" )
 end
 
+function GivePlayerScratchCardLoot( ply )
+
+end
+
 hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat )
  	if not IsValid( ply ) then return end
  	if text == "/buyscratchcard" then
@@ -19,8 +23,28 @@ hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat 
  			local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
  			local PlayerNewScratchCards = tonumber( PlayerScratchCards ) + 1
  			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
+ 			ply:addMoney( ScratchCards.CardPrice )
  		else
  			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", 1 ) --Give them one scratch card
+ 		end
+ 	end
+end )
+
+hook.Add( "PlayerSay", "ScratchCardsUseCardHook", function( ply, text, teamChat )
+ 	if not IsValid( ply ) then return end
+ 	if text == "/scratch" then
+ 		local PlayerSteamID = tostring( ply:SteamID() )
+ 		if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
+ 			local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
+ 			if PlayerScratchCards < 1 then
+ 				ply:ChatPrint( "You do not have any scratch cards!" )
+ 				return
+ 			end
+ 			local PlayerNewScratchCards = tonumber( PlayerScratchCards ) - 1
+ 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
+ 			GivePlayerScratchCardLoot( ply )
+ 		else
+ 			ply:ChatPrint( "You do not have any scratch cards!" )
  		end
  	end
 end )
