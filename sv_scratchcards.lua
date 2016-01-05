@@ -1,6 +1,6 @@
 ScratchCards = {}
 ScratchCards.Win = {}
-ScratchCards.CardPrice = -600 --Must be negative or will add money upon purchase
+ScratchCards.CardPrice = 600
 ScratchCards.Win.AmountHigher = 4800 --Highest amount of money you get if you win
 ScratchCards.Win.AmountLower = 1200 --Lowest amount of money you get if you win
 ScratchCards.Win.Chance = 5 -- Percent chance out of 100
@@ -18,14 +18,18 @@ end
 hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat )
  	if not IsValid( ply ) then return end
  	if text == "/buyscratchcard" then
- 		local PlayerSteamID = tostring( ply:SteamID() )
- 		if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
- 			local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
- 			local PlayerNewScratchCards = tonumber( PlayerScratchCards ) + 1
- 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
- 			ply:addMoney( ScratchCards.CardPrice )
+ 		if ply:canAfford( ScratchCards.CardPrice )
+ 			local PlayerSteamID = tostring( ply:SteamID() )
+ 			if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
+ 				local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
+ 				local PlayerNewScratchCards = tonumber( PlayerScratchCards ) + 1
+ 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
+ 				ply:addMoney( ScratchCards.CardPrice * -1 )
+ 			else
+ 				file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", 1 ) --Give them one scratch card
+ 			end
  		else
- 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", 1 ) --Give them one scratch card
+ 			ply:ChatPrint( "You cannot afford this item!" )
  		end
  	end
 end )
