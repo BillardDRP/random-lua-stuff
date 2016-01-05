@@ -59,6 +59,7 @@ end
 function RTD_Drugged( ply )
 	local become_message = "took some of that good stuff!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetFOV( 360, 30 )
 end
 
 function EnableRTD()
