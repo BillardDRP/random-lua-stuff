@@ -11,6 +11,13 @@ RTD.Rolls = { --Use this to add more rolls but only if you created the function 
 	[RTD_Drugged] = true
 ]
 
+function DisplayDiceMessage( ply, message_end )
+	for k, v in pairs( player.GetAll() ) do
+		local RandomNumber = math.random( 1, #RTD.Rolls )
+		v:ChatPrint( ply.." has rolled a "..RandomNumber.." and "..message_end )
+	end
+end
+
 function RTD_SpeedIncrease( ply )
 	local become_message = "became a cheetah!"
 end
@@ -35,7 +42,7 @@ function RTD_JumpDecrease( ply )
 	local become_message = "became an anvil!"
 end
 
-function RTD_JumpDecrease( ply )
+function RTD_Drugged( ply )
 	local become_message = "took some of that good stuff!"
 end
 
@@ -45,10 +52,13 @@ end
 
 function DisableRTD()
 	RTD.Enabled = false	
+	timer.Simple( RTD.CooldownTime, EnableRTD )
 end
 
 function PickRandomRTD( ply )
 	local RandomNumber = math.random( 1, #RTD.Rolls )
+	local FuncToCall = RTD.Rolls[RandomNumber]
+	timer.Simple( 0.1, FuncToCall )
 end
 
 hook.Add( "PlayerSay", "RollTheDiceCommandHook", function( ply, text, isTeam )
