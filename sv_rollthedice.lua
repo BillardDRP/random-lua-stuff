@@ -21,31 +21,39 @@ end
 function RTD_SpeedIncrease( ply )
 	local become_message = "became a cheetah!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetRunSpeed( 600 )
+	ply:SetWalkSpeed( 400 )
 end
 
 function RTD_SpeedDecrease( ply )
 	local become_message = "became a snail!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetRunSpeed( 6 )
+	ply:SetWalkSpeed( 4 )
 end
 
 function RTD_HealthIncrease( ply )
 	local become_message = "ate a lucky sandvich!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetHealth( 400 )
 end
 
 function RTD_HealthDecrease( ply )
-	local become_message = "caught ebola!"
+	local become_message = "became killable by a sneeze!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetHealth( 1 )
 end
 
 function RTD_JumpIncrease( ply )
 	local become_message = "became a bunny!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetJumpPower( 800 )
 end
 
 function RTD_JumpDecrease( ply )
 	local become_message = "became an anvil!"
 	DisplayDiceMessage( ply, become_message )
+	ply:SetJumpPower( 10 )
 end
 
 function RTD_Drugged( ply )
