@@ -20,30 +20,37 @@ end
 
 function RTD_SpeedIncrease( ply )
 	local become_message = "became a cheetah!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_SpeedDecrease( ply )
 	local become_message = "became a snail!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_HealthIncrease( ply )
-	local become_message = "took some morphine!"
+	local become_message = "ate a lucky sandvich!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_HealthDecrease( ply )
 	local become_message = "caught ebola!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_JumpIncrease( ply )
 	local become_message = "became a bunny!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_JumpDecrease( ply )
 	local become_message = "became an anvil!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function RTD_Drugged( ply )
 	local become_message = "took some of that good stuff!"
+	DisplayDiceMessage( ply, become_message )
 end
 
 function EnableRTD()
