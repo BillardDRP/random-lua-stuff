@@ -5,17 +5,22 @@ ScratchCards.Win.AmountHigher = 4800 --Highest amount of money you get if you wi
 ScratchCards.Win.AmountLower = 1200 --Lowest amount of money you get if you win
 ScratchCards.Win.Chance = 5 -- Percent chance out of 100
 
+--All created/written/read files are relative to GarrysMod/garrysmod/data if you want to change them
+
+if not file.Exists( "darkrp_scratch_cards" ) then
+	file.CreateDir( "darkrp_scratch_cards" )
+end
 
 hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat )
- 	if !IsValid( ply ) then return end
- 	if text == "/buyscratchcard" or text == "/buycard" then
- 		local PlayerSteamID = tostring(ply:SteamID())
+ 	if not IsValid( ply ) then return end
+ 	if text == "/buyscratchcard" then
+ 		local PlayerSteamID = tostring( ply:SteamID() )
  		if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
  			local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
- 			local PlayerNewScratchCards = PlayerScratchCards + 1
- 			
+ 			local PlayerNewScratchCards = tonumber( PlayerScratchCards ) + 1
+ 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", PlayerNewScratchCards )
  		else
- 			file.
+ 			file.Write( "darkrp_scratch_cards/"..PlayerSteamID..".lua", 1 ) --Give them one scratch card
  		end
  	end
 end )
