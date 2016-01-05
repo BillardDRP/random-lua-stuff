@@ -12,13 +12,20 @@ if not file.Exists( "darkrp_scratch_cards" ) then
 end
 
 function GivePlayerScratchCardLoot( ply )
-
+	local CardNumber = math.random( 1, 100 )
+	if ScratchCards.Win.Chance <= CardNumber then
+		local WinAmount = math.random( ScratchCards.Win.AmountLower, ScratchCards.Win.AmountHigher )
+		ply:addMoney( WinAmount )
+		ply:ChatPrint( "You have won "..WinAmount.." dollars!" )
+	else
+		ply:ChatPrint( "I guess it just isn't your lucky day." )
+	end
 end
 
 hook.Add( "PlayerSay", "ScratchCardsBuyCardHook", function( ply, text, teamChat )
  	if not IsValid( ply ) then return end
  	if text == "/buyscratchcard" then
- 		if ply:canAfford( ScratchCards.CardPrice )
+ 		if ply:canAfford( ScratchCards.CardPrice ) then
  			local PlayerSteamID = tostring( ply:SteamID() )
  			if file.Exists( "darkrp_scratch_cards/"..PlayerSteamID..".lua" ) then
  				local PlayerScratchCards = file.Read( PlayerSteamID..".lua" )
