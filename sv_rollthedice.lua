@@ -1,3 +1,5 @@
+util.AddNetworkString( "RTD_DrawDrugEffects" )
+
 RTD = {}
 RTD.Enabled = true --Keep this true
 RTD.CooldownTime = 20 --Cooldown time in seconds
@@ -59,7 +61,9 @@ end
 function RTD_Drugged( ply )
 	local become_message = "took some of that good stuff!"
 	DisplayDiceMessage( ply, become_message )
-	ply:SetFOV( 360, 30 )
+	ply:SetFOV( 160, 20 )
+	net.Start( "RTD_DrawDrugEffects" )
+	net.Send( ply )
 end
 
 function EnableRTD()
