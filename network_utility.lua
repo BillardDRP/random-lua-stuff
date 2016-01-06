@@ -1,5 +1,5 @@
-NU = {}
-NU.SendStringToClient = function( theFile, theString )
+NetworkUtility = {}
+NetworkUtility.SendStringToClient = function( theFile, theString )
 	if not theFile then return end
 	util.AddNetworkString( tostring( theFile ) )
 	net.Start( tostring( theFile ) )
