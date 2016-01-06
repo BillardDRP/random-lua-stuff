@@ -1,11 +1,11 @@
 util.AddNetworkString( "RTD_DrawDrugEffects" )
 
-thePlayer = LocalPlayer() or Player()
+local thePlayer = LocalPlayer() or Player()
 
-RTD = {}
-RTD.Enabled = true --Keep this true
-RTD.CooldownTime = 20 --Cooldown time in seconds
-RTD.Rolls = { --Use this to add more rolls but only if you created the function for the roll beforehand
+local RTD = {}
+local RTD.Enabled = true --Keep this true
+local RTD.CooldownTime = 20 --Cooldown time in seconds
+local RTD.Rolls = { --Use this to add more rolls but only if you created the function for the roll beforehand
 	[RTD_SpeedIncrease] = true
 	[RTD_SpeedDecrease] = true
 	[RTD_HealthIncrease] = true
