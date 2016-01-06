@@ -11,7 +11,7 @@ if not file.Exists( "darkrp_scratch_cards" ) then
 	file.CreateDir( "darkrp_scratch_cards" )
 end
 
-function GivePlayerScratchCardLoot( ply )
+local function GivePlayerScratchCardLoot( ply )
 	local CardNumber = math.random( 1, 100 )
 	if ScratchCards.Win.Chance <= CardNumber then
 		local WinAmount = math.random( ScratchCards.Win.AmountLower, ScratchCards.Win.AmountHigher )
