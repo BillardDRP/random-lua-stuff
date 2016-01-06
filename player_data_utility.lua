@@ -10,5 +10,6 @@ PlayerData.LoadData = function( ply, directory )
 	if not file.Exists( directory..PlyID ) then
 		return
 	end
-	file.Read( directory..PlyID, "DATA" )
+	local data = file.Read( directory..PlyID, "DATA" )
+	return dat
 end
