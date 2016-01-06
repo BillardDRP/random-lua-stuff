@@ -1,9 +1,9 @@
-ScriptCraft = {}
-ScriptCraft.Limit = {}
-ScriptCraft.Limit.Weapons = 2
-ScriptCraft.Limit.Entities = 2
-ScriptCraft.Limit.Scripts = 2
-ScriptCraft.BlockedFunctions = {
+local ScriptCraft = {}
+local ScriptCraft.Limit = {}
+local ScriptCraft.Limit.Weapons = 2
+local ScriptCraft.Limit.Entities = 2
+local ScriptCraft.Limit.Scripts = 2
+local ScriptCraft.BlockedFunctions = {
 	[":SetHealth"] = true
 	[":SetMaxHealth"] = true
 	[":Kill"] = true
