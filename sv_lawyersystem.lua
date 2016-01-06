@@ -10,8 +10,14 @@ local LawyerSystem.FirstNames = {
 	["Humphrey"] = true
 	["William"] = true
 	["Robert"] = true
-	["Harris"] = true
+	["Harry"] = true
 	["Franklin"] = true
+	["Ronald"] = true
+	["Ivan"] = true
+	["Vladimir"] = true
+	["Arnold"] = true
+	["Dwayne"] = true
+	["Glenn"] = true
 }
 local LawyerSystem.MiddleNames = {
 	["J."] = true
@@ -19,6 +25,9 @@ local LawyerSystem.MiddleNames = {
 	["R."] = true
 	["T."] = true
 	["F."] = true
+	["S."] = true
+	["K."] = true
+	["\"The Rock\""] = true
 }
 local LawyerSystem.LastNames = {
 	["Jones"] = true
@@ -26,6 +35,11 @@ local LawyerSystem.LastNames = {
 	["Humphreys"] = true
 	["Truman"] = true
 	["Potter"] = true
+	["McDonald"] = true
+	["Kalishnakov"] = true
+	["Reagan"] = true
+	["Johnson"] = true
+	["Miyashiro"] = true
 }
 
 local function SavePlayerData( ply, directory, data )
