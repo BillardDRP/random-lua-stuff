@@ -71,7 +71,13 @@ local LawyerSystem.GivePlayerWelfare = function( ply )
 	if LawyerSystem.WelfareChance >= RandomNumber then
 		ply:addMoney( WelfareAmount )
 		ply:ChatPrint( "You have been given "..WelfareAmount.." in a welfare check from your lawyer!" )
+	else
+		ply:ChatPrint( "Your lawyer failed at getting you welfare!" )
 	end
+end
+
+local LawyerSystem.GivePlayerMedical = function( ply )
+	
 end
 
 local LawyerSystem.GetLawyerName = function()
