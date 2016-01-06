@@ -1,9 +1,9 @@
-ScratchCards = {}
-ScratchCards.Win = {}
-ScratchCards.CardPrice = 600
-ScratchCards.Win.AmountHigher = 4800 --Highest amount of money you get if you win
-ScratchCards.Win.AmountLower = 1200 --Lowest amount of money you get if you win
-ScratchCards.Win.Chance = 5 -- Percent chance out of 100
+local ScratchCards = {}
+local ScratchCards.Win = {}
+local ScratchCards.CardPrice = 600
+local ScratchCards.Win.AmountHigher = 4800 --Highest amount of money you get if you win
+local ScratchCards.Win.AmountLower = 1200 --Lowest amount of money you get if you win
+local ScratchCards.Win.Chance = 5 -- Percent chance out of 100
 
 --All created/written/read files are relative to GarrysMod/garrysmod/data if you want to change them
 
