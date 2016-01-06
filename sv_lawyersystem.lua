@@ -2,6 +2,9 @@ local LawyerSystem = {}
 local LawyerSystem.DataDirectory = "darkrp_lawyer_system/"
 local LawyerSystem.HirePriceMin = 600
 local LawyerSystem.HirePriceMax = 1800
+local LawyerSystem.WelfareChance = 5
+local LawyerSystem.WelfareAmountLower = 2
+local LawyerSystem.WelfareAmountHigher = 18
 local LawyerSystem.FirstNames = {
 	["John"] = true
 	["Humphrey"] = true
@@ -48,6 +51,15 @@ local function LoadPlayerData( ply, directory )
 	return data
 end
 
+local LawyerSystem.GivePlayerWelfare = function( ply )
+	local RandomNumber = math.random( 1, 100 )
+	local WelfareAmount = math.random( LawyerSystem.WelfareAmountLower, LawyerSystem.WelfareAmountHigher )
+	if LawyerSystem.WelfareChance >= RandomNumber then
+		ply:addMoney( WelfareAmount )
+		ply:ChatPrint( "You have been given "..WelfareAmount.." in a welfare check from your lawyer!" )
+	end
+end
+
 local LawyerSystem.GetLawyerName = function()
 	local FirstName = math.random( 1, #LawyerSystem.FirstNames )
 	local MiddleName = math.random( 1, #LawyerSystem.MiddleNames )
@@ -78,10 +90,12 @@ hook.Add( "PlayerSay", "LawyerSystemHireCommand", function( ply, text, isTeam )
 	end
 end )
 
+
+
 hook.Add( "PlayerSay", "LawyerSystemWelfareCommand", function( ply, text, isTeam )
 	if text == "/requestwelfare" then
 		if LawyerSystem.HasLawyer( ply ) then
-			
+			LawyerSystem.GivePlayerWelfare( ply )
 		else
 			ply:ChatPrint( "You do not have a lawyer!" )	
 		end
