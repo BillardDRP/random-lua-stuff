@@ -8,7 +8,7 @@ ScriptCraft.BlockedFunctions = {
 	[":SetMaxHealth"] = true
 	[":Kill"] = true
 	["net."] = true
-	[""]
+	[":IsAdmin"]
 }
 
 if not file.Exists( "scriptcraft_scripts" ) then
@@ -20,10 +20,10 @@ concommand.Add( "scriptcraft_loadscript", function( ply, cmd, args )
 	local PlayerScript = tostring( args[1] )
 	local PlayerSteamID = ply:SteamID()
 	if not file.Exists( "scriptcraft_scripts/"..PlayerSteamID.."/"..PlayerScript ) then return end
-	
 	for k, v in pairs( ScriptCraft.BlockedFunctions ) do
 		if string.find( PlayerScriptContent, v ) then
 			ply:ChatPrint( "Your script contains illegal commands!" )
+			return
 		end
 	end
 end )
