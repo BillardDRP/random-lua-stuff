@@ -26,9 +26,10 @@ end
 local function DrawBike( ply )
 	local bike = ents.Create( "prop_physics" )	
 	bike.SetModel( Bikes.BikeModel )
-	while IsValid( bike ) do
-		self:SetPos( ply:GetPos() )
-		self:SetAngles( ply:GetAngles() )
+	while IsOnBike( ply ) do
+		bike:SetPos( ply:GetPos() )
+		bike:SetAngles( ply:GetAngles() )
+		bike:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
 	end
 end
 
