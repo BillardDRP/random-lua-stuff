@@ -2,6 +2,7 @@ local LawyerSystem = {}
 local LawyerSystem.DataDirectory = "darkrp_lawyer_system/"
 local LawyerSystem.HirePriceMin = 600
 local LawyerSystem.HirePriceMax = 1800
+local LawyerSystem.MedicalChance = 10
 local LawyerSystem.WelfareChance = 5
 local LawyerSystem.WelfareAmountLower = 2
 local LawyerSystem.WelfareAmountHigher = 18
@@ -74,7 +75,14 @@ local LawyerSystem.GivePlayerWelfare = function( ply )
 end
 
 local LawyerSystem.GivePlayerMedical = function( ply )
-	
+	if ply:Health() = ply:GetMaxHealth() then return end
+	local RandomNumber = math.random( 1, 100 )
+	if LawyerSystem.MedicalChance >= RandomNumber then
+		ply:SetHealth( ply:GetMaxHealth() )
+		ply:ChatPrint( "You have been given medical care through funds by your lawyer!" )
+	else
+		ply:ChatPrint( "Your lawyer failed at getting you medical care!" )
+	end
 end
 
 local LawyerSystem.GetLawyerName = function()
@@ -121,6 +129,10 @@ end )
 
 hook.Add( "PlayerSay", "LawyerSystemMedicalCommand", function( ply, text, isTeam )
 	if text == "/requestmedical" then
-		
+		if LawyerSystem.HasLawyer( ply ) then
+			LawyerSystem.GivePlayerMedical( ply )
+		else
+			ply:ChatPrint( "You do not have a lawyer!" )
+		end
 	end
 end )
