@@ -1,5 +1,14 @@
 local LawyerSystem = {}
 local LawyerSystem.DataDirectory = "darkrp_lawyer_system/"
+local LawyerSystem.Message = {}
+local LawyerSystem.Message.NoLawyer = "You do not have a lawyer!"
+local LawyerSystem.Message.HasBeenHired = " has been hired as your lawyer!"
+local LawyerSystem.Message.CannotAfford = "You cannot afford a lawyer!"
+local LawyerSystem.Message.Welfare1 = "You have received "
+local LawyerSystem.Message.Welfare2 = " in a welfare check from your lawyer!"
+local LawyerSystem.Message.NoWelfare = "Your lawyer failed to get you a welfare check!"
+local LawyerSystem.Message.Medical = "Your lawyer has payed your medical bills!"
+local LawyerSystem.Message.NoMedical = "Your lawyer failed at paying your medical bills!"
 local LawyerSystem.HirePriceMin = 600
 local LawyerSystem.HirePriceMax = 1800
 local LawyerSystem.MedicalChance = 10
@@ -68,9 +77,9 @@ local LawyerSystem.GivePlayerWelfare = function( ply )
 	local WelfareAmount = math.random( LawyerSystem.WelfareAmountLower, LawyerSystem.WelfareAmountHigher )
 	if LawyerSystem.WelfareChance >= RandomNumber then
 		ply:addMoney( WelfareAmount )
-		ply:ChatPrint( "You have been given "..WelfareAmount.." in a welfare check from your lawyer!" )
+		ply:ChatPrint( LawyerSystem.Message.Welfare1..WelfareAmount..LawyerSystem.Message.Welfare2 )
 	else
-		ply:ChatPrint( "Your lawyer failed at getting you welfare!" )
+		ply:ChatPrint( LawyerSystem.Message.NoWelfare )
 	end
 end
 
@@ -79,9 +88,9 @@ local LawyerSystem.GivePlayerMedical = function( ply )
 	local RandomNumber = math.random( 1, 100 )
 	if LawyerSystem.MedicalChance >= RandomNumber then
 		ply:SetHealth( ply:GetMaxHealth() )
-		ply:ChatPrint( "You have been given medical care through funds by your lawyer!" )
+		ply:ChatPrint( LawyerSystem.Message.Medical )
 	else
-		ply:ChatPrint( "Your lawyer failed at getting you medical care!" )
+		ply:ChatPrint( LawyerSystem.Message.NoMedical )
 	end
 end
 
@@ -107,10 +116,10 @@ hook.Add( "PlayerSay", "LawyerSystemHireCommand", function( ply, text, isTeam )
 		if ply:canAfford( LawyerPrice ) then
 			ply:addMoney( LawyerPrice * -1 )
 			local LawyerName = LawyerSystem.GetName
-			ply:ChatPrint( LawyerName.." has been hired as your lawyer!" )
+			ply:ChatPrint( LawyerName..LawyerSystem.Message.HasBeenHired )
 			SavePlayerData( ply, LawyerSystem.DataDirectory, "true" )
 		else
-			ply:ChatPrint( "You cannot afford a lawyer!" )
+			ply:ChatPrint( LawyerSystem.Message.CannotAfford )
 		end
 	end
 end )
@@ -122,7 +131,7 @@ hook.Add( "PlayerSay", "LawyerSystemWelfareCommand", function( ply, text, isTeam
 		if LawyerSystem.HasLawyer( ply ) then
 			LawyerSystem.GivePlayerWelfare( ply )
 		else
-			ply:ChatPrint( "You do not have a lawyer!" )	
+			ply:ChatPrint( LawyerSystem.Message.NoLawyer )	
 		end
 	end
 end )
@@ -132,7 +141,7 @@ hook.Add( "PlayerSay", "LawyerSystemMedicalCommand", function( ply, text, isTeam
 		if LawyerSystem.HasLawyer( ply ) then
 			LawyerSystem.GivePlayerMedical( ply )
 		else
-			ply:ChatPrint( "You do not have a lawyer!" )
+			ply:ChatPrint( LawyerSystem.Message.NoLawyer )
 		end
 	end
 end )
