@@ -1,8 +1,8 @@
-function SetContains(set, key)
+local function SetContains(set, key)
     return set[key] ~= nil
 end
 
-TeamLoadouts = {
+local TeamLoadouts = {
 	["Gun Dealer"] = { "weapon_crowbar", "weapon_pistol", "lockpick" }
 	["Mayor"] = { "stunstick", "weapon_pistol" }
 	["Gangster"] = { "weapon_mac102", "weapon_deagle2" }
