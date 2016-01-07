@@ -5,7 +5,7 @@ if SERVER then
 end
 
 if CLIENT then
-	SWEP.PrintName			= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)	
+	SWEP.PrintName			= "Super Scooper"		-- 'Nice' Weapon name (Shown on HUD)	
 	SWEP.Slot				= 0						-- Slot in the weapon selection menu
 	SWEP.SlotPos			= 10					-- Position in the slot
 	SWEP.DrawAmmo			= true					-- Should draw the default HL2 ammo counter
@@ -65,20 +65,23 @@ local DoorClasses = {
 function SWEP:PrimaryAttack()
 	if ( !self:CanPrimaryAttack() ) then return end
 	self.Weapon:EmitSound("Weapon_AR2.Single")
-	self:ShootBullet( 150, 1, 0.01 )
+	self:ShootBullet( 10, 1, 0.01 )
 	self:TakePrimaryAmmo( 1 )
 	self.Owner:ViewPunch( Angle( -1, 0, 0 ) )
 	local tr = self.Owner:GetEyeTrace()
-	if SetContains( DoorClasses, tr.Entity:GetClass() ) then
-		tr.Entity:Fire( "unlock" )
-		tr.Entity:Fire( "open" )
+	if tr.Entity:Alive() then
+		tr.Entity:Freeze( true )
+		tr.Entity:DropWeapon( tr.Entity:GetCurrentWeapon() )
+		timer.Simple( 2, function()
+			tr.Entity:Freeze( false )
+		end )
 	end
 end
 
 function SWEP:SecondaryAttack()
 	if ( !self:CanSecondaryAttack() ) then return end
 	self.Weapon:EmitSound("Weapon_Shotgun.Single")
-	self:ShootBullet( 150, 9, 0.2 )
+	self:ShootBullet( 40, 9, 0.2 )
 	self:TakeSecondaryAmmo( 1 )
 	self.Owner:ViewPunch( Angle( -10, 0, 0 ) )
 	local tr = self.Owner:GetEyeTrace()
@@ -92,7 +95,7 @@ function SWEP:Reload()
 	self.Weapon:DefaultReload( ACT_VM_RELOAD )
 	local tr = self.Owner:GetEyeTrace()
 	if IsValid( tr.Entity ) then
-		tr.Entity:Ignite()
+		tr.Entity:Ignite( 6, 128 )
 	end
 end
 
