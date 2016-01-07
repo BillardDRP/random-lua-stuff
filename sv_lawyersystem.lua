@@ -47,9 +47,6 @@ local function SavePlayerData( ply, directory, data )
 		file.CreateDir( directory )
 	end
 	local PlayerSteamID = ply:SteamID()
-	if not file.Exists( directory..PlayerSteamID ) then
-		return
-	end
 	file.Write( directory..PlayerSteamID..".txt", data )
 end
 
