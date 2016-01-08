@@ -16,7 +16,7 @@ local XP.SavePlayerData = function( ply, directory, data )
 	file.Write( directory..PlyID, data )
 end
 
-XP.LoadPlayerData = function( ply, directory )
+local XP.LoadPlayerData = function( ply, directory )
 	if not file.Exists( directory..PlyID ) then
 		return
 	end
