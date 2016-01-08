@@ -3,6 +3,8 @@ local XP.Reward = {}
 local XP.Penalty = {}
 local XP.Directory = "billard_xp_system/xp/"
 local XP.PrestigeDirectory = "billard_xp_system/prestige/"
+local XP.TimerTime = 300 --Five minutes
+local XP.TimerEnabled = true
 local XP.Reward.KillPlayer = 60
 local XP.Reward.KillNPC = 10
 local XP.Penalty.Death = 0 --No penalty for dying
@@ -52,6 +54,9 @@ local XP.GiveOnTimer() = function()
 			if IsValid( v ) then
 				local PlyNewXP = XP.GetPlayerXP + 10
 				XP.SetPlayerXP( v, PlyNewXP )
+				if XP.TimerEnabled then
+					XP.GiveOnTimer()
+				end
 			end
 		end
 	end )
