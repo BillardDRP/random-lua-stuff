@@ -46,6 +46,17 @@ local XP.GetPlayerLevel = function( ply )
 	return data
 end
 
+local XP.GiveOnTimer() = function()
+	timer.Simple( XP.TimerTime, function()
+		for k, v in pairs( player.GetAll() ) do
+			if IsValid( v ) then
+				local PlyNewXP = XP.GetPlayerXP + 10
+				XP.SetPlayerXP( v, PlyNewXP )
+			end
+		end
+	end )
+end
+
 hook.Add( "OnNPCKilled", "XP_System_Kill_NPC", function( npc, attacker, inflictor )
 	if not IsValid( npc ) then return end
 	if not IsValid( attacker ) then return end
