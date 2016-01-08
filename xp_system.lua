@@ -53,3 +53,14 @@ hook.Add( "OnNPCKilled", "XP_System_Kill_NPC", function( npc, attacker, inflicto
 	local PlyNewXP = XP.GetPlayerXP( attacker ) + XP.Reward.KillNPC
 	XP.SetPlayerLevel( attacker, PlyNewXP )
 end )
+
+hook.Add( "PlayerHurt", "XP_System_Kill_Player", function( victim, attacker, healthRemaining, damageTaken )
+	if not IsValid( victim ) then return end
+	if not IsValid( attacker ) then return end
+	if not victim:IsPlayer() then return end
+	if not attacker:IsPlayer() then return end
+	if not victim:Alive() then
+		local PlyNewXP = XP.GetPlayerXP( attacker ) + XP.Reward.KillPlayer
+		XP.SetPlayerLevel( attacker, PlyNewXP )
+	end
+end )
