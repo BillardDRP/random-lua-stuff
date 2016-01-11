@@ -1,6 +1,6 @@
 #include <sourcemod>
  
-public Plugin myinfo =
+public Plugin:myinfo =
 {
 	name = "Test Plugin",
 	author = "Sir Francis Billard",
@@ -9,12 +9,14 @@ public Plugin myinfo =
 	url = "www.google.com"
 };
 
-public void OnPluginStart()
+public OnPluginStart()
 {
    HookEvent("player_hurt", Event_PlayerHurt);
 }
  
-public void Event_PlayerHurt()
+public Action:Event_PlayerHurt( player_hurt, "OneHitKnivesHook", false )
 {
+
+	event.GetString( "weapon" )
 
 }
