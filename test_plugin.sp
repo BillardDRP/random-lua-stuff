@@ -11,12 +11,15 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
-   HookEvent("player_hurt", Event_PlayerHurt);
+	HookEvent("player_hurt", Event_PlayerHurt);
 }
  
 public Action:Event_PlayerHurt( player_hurt, "OneHitKnivesHook", false )
 {
 
-	event.GetString( "weapon" )
+	string WeaponUsed = event.GetString( "weapon" )
+	if WeaponUsed == "weapon_knife" then
+	
+	end
 
 }
