@@ -1,12 +1,12 @@
 local XP = {}
 local XP.Reward = {}
 local XP.Penalty = {}
-local XP.Directory = "billard_xp_system/xp/"
-local XP.PrestigeDirectory = "billard_xp_system/prestige/"
+local XP.Directory = "billard_xp_system/xp/" --Where player XP amounts will be saved in "garrysmod/data/"
+local XP.PrestigeDirectory = "billard_xp_system/prestige/" --Where player prestige amounts will be saved in "garrysmod/data/"
 local XP.TimerTime = 300 --Five minutes
-local XP.TimerEnabled = true
-local XP.Reward.KillPlayer = 60
-local XP.Reward.KillNPC = 10
+local XP.TimerEnabled = true --Whetherpeople get XP over time
+local XP.Reward.KillPlayer = 60 --XP reward for killing a player
+local XP.Reward.KillNPC = 10 --XP reward for killing an NPC
 local XP.Penalty.Death = 0 --No penalty for dying
 
 
@@ -48,7 +48,7 @@ local XP.GetPlayerLevel = function( ply )
 	return data
 end
 
-local XP.GiveOnTimer() = function()
+local XP.GiveOnTimer = function()
 	timer.Simple( XP.TimerTime, function()
 		for k, v in pairs( player.GetAll() ) do
 			if IsValid( v ) then
