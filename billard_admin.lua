@@ -1,7 +1,7 @@
 local function findplayer( name )
 	name = string.lower( name )
 	for k,v in pairs( player.GetAll() ) do
-		if string.lower(v:SteamID() ) == name then
+		if string.lower( v:SteamID() ) == name then
 			return v
 		end
 		if string.lower( v:UniqueID() ) == name then
