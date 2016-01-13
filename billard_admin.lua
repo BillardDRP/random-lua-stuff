@@ -19,3 +19,39 @@ local function findplayer( name )
 		end
 	end
 end
+
+concommand.Add( "billard_ban", function( ply, cmd, args )
+	if not args[1] then return end
+	if not IsValid( ply ) then return end
+	if not ply:IsAdmin() then
+		ply:ChatPrint( "You do not have permission to use this command!" )
+		return
+	end
+	local BanTime = 1
+	if not args[2] then
+		Bantime = 60
+	else
+		BanTime = tonumber( args[2] )
+	end
+	if findplayer( tostring( args[1] ) ) then
+		local Baddie = findplayer( tostring( args[1] ) )
+		Baddie:Ban( BanTime, true )
+	else
+		ply:ChatPrint( "Player not found!" )
+	end
+end )
+
+concommand.Add( "billard_kick", function( ply, cmd, args )
+	if not args[1] then return end
+	if not IsValid( ply ) then return end
+	if not ply:IsAdmin() then
+		ply:ChatPrint( "You do not have permission to use this command!" )
+		return
+	end
+	if findplayer( tostring( args[1] ) ) then
+		local Baddie = findplayer( tostring( args[1] ) )
+		Baddie:Ban( 0, true )
+	else
+		ply:ChatPrint( "Player not found!" )
+	end
+end )
