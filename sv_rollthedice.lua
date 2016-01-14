@@ -57,7 +57,7 @@ local function RTD_JumpIncrease( ply )
 	local become_message = "became a bunny!"
 	DisplayDiceMessage( ply, become_message )
 	targetPly:SetJumpPower( 800 )
-local end
+end
 
 local function RTD_JumpDecrease( ply )
 	local targetPly = ply or thePlayer
