@@ -64,6 +64,24 @@ basic_mods["freeze"] = function( ply, cmd, args )
 	end )
 end
 
+basic_mods["model"] = function( ply, cmd, args )
+	if not IsValid( ply ) then
+		return
+	end
+	local model = "models/error.mdl"
+	if not args[1] then
+		model = "models/error.mdl"
+	else
+		model = tostring( args[1] )
+	end
+	local tr = ply:GetEyeTrace()
+	if not IsValid( tr.Entity ) then
+		return
+	end
+	tr.Entity:SetModel( model )
+end
+
 concommand.Add( "basic_create", basic_mods.create )
 concommand.Add( "basic_burn", basic_mods.burn )
 concommand.Add( "basic_freeze", basic_mods.freeze )
+concommand.Add( "basic_model", basic_mods.model )
