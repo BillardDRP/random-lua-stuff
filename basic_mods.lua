@@ -3,11 +3,14 @@
 basic_mods = {} -- Global
 
 basic_mods["create"] = function( ply, cmd, args ) -- Built to be console command
-	local thing = ""
-	local model = ""
 	if not IsValid( ply ) then
 		return
 	end
+	if not ply:IsAdmin() then
+		return
+	end
+	local thing = ""
+	local model = ""
 	if not args[1] then
 		thing = "sent_ball"
 	else
@@ -28,6 +31,9 @@ basic_mods["burn"] = function( ply, cmd, args )
 	if not IsValid( ply ) then
 		return
 	end
+	if not ply:IsAdmin() then
+		return
+	end
 	local length = 1
 	if not args[1] then
 		length = 5
@@ -43,6 +49,9 @@ end
 
 basic_mods["freeze"] = function( ply, cmd, args )
 	if not IsValid( ply ) then
+		return
+	end
+	if not ply:IsAdmin() then
 		return
 	end
 	local length = 1
@@ -66,6 +75,9 @@ end
 
 basic_mods["model"] = function( ply, cmd, args )
 	if not IsValid( ply ) then
+		return
+	end
+	if not ply:IsAdmin() then
 		return
 	end
 	local model = "models/error.mdl"
