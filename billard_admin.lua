@@ -72,3 +72,24 @@ concommand.Add( "billard_kick", function( ply, cmd, args )
 		ply:ChatPrint( "Player not found!" )
 	end
 end )
+
+concommand.Add( "billard_ignite", function( ply, cmd, args )
+	if not args[1] then return end
+	if not IsValid( ply ) then return end
+	if not ply:IsAdmin() then
+		ply:ChatPrint( "You do not have permission to use this command!" )
+		return
+	end
+	local BurnTime = 10
+	if not args[2] then
+		BurnTime = 10
+	else
+		BurnTime = tonumber( args[2] )
+	end
+	if findplayer( tostring( args[1] ) ) then
+		local Baddie = findplayer( tostring( args[1] ) )
+		Baddie:Ignite( BurnTime, 16 )
+	else
+		ply:ChatPrint( "Player not found!" )
+	end
+end )
