@@ -44,7 +44,13 @@ basic_mods["burn"] = function( ply, cmd, args )
 	if not IsValid( tr.Entity ) then
 		return
 	end
+	local old = tr.Entity:GetColor()
 	tr.Entity:Ignite( length, 16 ) -- Burn that sucker
+	tr.Entity:SetColor( Color( 0, 0, 0 ) ) -- Make it black
+	timer.Simple( length, function()
+		tr.Entity:Extinguish()
+		tr.Entity:SetColor( old )
+	end )
 end
 
 basic_mods["freeze"] = function( ply, cmd, args )
@@ -67,9 +73,12 @@ basic_mods["freeze"] = function( ply, cmd, args )
 	if not tr.Entity:IsPlayer() then
 		return
 	end
+	local old = tr.Entity:GetColor()
 	tr.Entity:Freeze( true )
+	tr.Entity:SetColor( 0, 0, 255 )
 	timer.Simple( length, function()
 		tr.Entity:Freeze( false )
+		tr.Entity:SetColor( old )
 	end )
 end
 
