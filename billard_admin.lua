@@ -2,7 +2,7 @@ BillardAdmin = {}
 BillardAdmin.SpawnProtection = {}
 BillardAdmin.SpawnProtection.Enabled = CreateConVar( "billard_spawnprotection_enabled", 1, "", "Toggle spawn protection" )
 BillardAdmin.SpawnProtection.Time = CreateConVar( "billard_spawnprotection_time", 3, "", "Spawn protection time in seconds" )
-BillardAdmin.SpawnProtection.Material = CreateConVar( "billard_spawnprotection_material", 3, "", "Material of spawn protected players" )
+BillardAdmin.SpawnProtection.Material = CreateConVar( "billard_spawnprotection_material", "material", "", "Material of spawn protected players" )
 
 hook.Add( "PlayerSpawn", "BillardAdminSpawnProtection", function( ply )
 	if not BillardAdmin.SpawnProtection.Enabled:GetBool() then return end
