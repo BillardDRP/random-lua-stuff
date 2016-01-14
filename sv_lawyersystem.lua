@@ -80,7 +80,7 @@ local LawyerSystem.GivePlayerWelfare = function( ply )
 	local WelfareAmount = math.random( LawyerSystem.WelfareAmountLower, LawyerSystem.WelfareAmountHigher )
 	if LawyerSystem.WelfareChance >= RandomNumber then
 		ply:addMoney( WelfareAmount )
-		ply:ChatPrint( Lang[LawyerSystem.Lang]Welfare1..WelfareAmount..Lang.[LawyerSystem.Lang].Welfare2 )
+		ply:ChatPrint( Lang[LawyerSystem.Lang]Welfare1..WelfareAmount..Lang[LawyerSystem.Lang]Welfare2 )
 	else
 		ply:ChatPrint( Lang[LawyerSystem.Lang]NoWelfare )
 	end
