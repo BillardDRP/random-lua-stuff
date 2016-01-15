@@ -48,3 +48,38 @@ SWEP.DrawCrosshair = true
 
 SWEP.Slot = 0
 SWEP.SlotPos = 10
+
+-- Primary attack info
+
+SWEP.Primary.Ammo = "pistol"
+SWEP.Primary.ClipSize = 18
+SWEP.Primary.DefaultClip = 36
+SWEP.Primary.Automatic = false
+SWEP.Primary.Damage = 10
+SWEP.Primary.PushForce = 500
+SWEP.Primary.MaxDistance = 50000
+SWEP.Primary.NumBullets = 1
+SWEP.Primary.Trace = 1
+SWEP.Primary.Cone = 0.05
+
+-- Secondary attack info
+
+SWEP.Secondary.Ammo = "buckshot"
+SWEP.Secondary.ClipSize = 4
+SWEP.Secondary.DefaultClip = 8
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Damage = 10
+SWEP.Secondary.PushForce = 500
+SWEP.Secondary.MaxDistance = 50000
+SWEP.Secondary.NumBullets = 1
+SWEP.Secondary.Trace = 1
+SWEP.Secondary.Cone = 0.05
+
+-- Misc info
+
+SWEP.UseHands = false
+SWEP.AccurateCrosshair = true
+
+-- Advanced code, be careful!
+
+
