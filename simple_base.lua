@@ -22,6 +22,8 @@ SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.ViewModelFlip = false
 SWEP.ViewModelFOV = 62
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
+SWEP.UseHands = false
+SWEP.HoldType = "pistol"
 
 -- Switching info
 
@@ -73,18 +75,21 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Damage = 10
 SWEP.Secondary.PushForce = 500
 SWEP.Secondary.MaxDistance = 50000
-SWEP.Secondary.NumBullets = 1
+SWEP.Secondary.NumBullets = 6
 SWEP.Secondary.Trace = 1
 SWEP.Secondary.Cone = 0.05
-SWEP.Secondary.Sound = "Weapon_AR2.Single"
+SWEP.Secondary.Sound = "Weapon_Shotgun.Single"
 SWEP.Secondary.Recoil = 1
 
 -- Misc info
 
-SWEP.UseHands = false
 SWEP.AccurateCrosshair = true
 
 -- Advanced code, be careful!
+
+function SWEP:Initialize()
+	self:SetHoldType( self.HoldType )
+end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack then return end
