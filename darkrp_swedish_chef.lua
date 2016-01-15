@@ -1,5 +1,5 @@
 --[[---------------------------------------------------------------------------
-English (example) language file
+BORK DE FLERPING FLERPTY (example) language file
 ---------------------------------------------------------------------------
 This is the english language file. The things on the left side of the equals sign are the things you should leave alone
 The parts between the quotes are the parts you should translate. You can also copy this file and create a new language.
@@ -30,9 +30,9 @@ local my_language = {
 	f1Search = "Search...",
 
 	-- Money things:
-	price = "Price: %s%d",
-	priceTag = "Price: %s",
-	reset_money = "%s has reset all players' money!",
+	price = "Bork: %s%d",
+	priceTag = "Bork: %s",
+	reset_money = "%s bork flerpetti godem flerp' currence!"
 	has_given = "%s has given you %s",
 	you_gave = "You gave %s %s",
 	npc_killpay = "%s for killing an NPC!",
