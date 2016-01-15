@@ -19,10 +19,10 @@ Make sure the convar gmod_language is set to your language code. You can do that
 
 local my_language = {
 	-- Admin things
-	need_admin = "You need admin privileges in order to be able to %s",
-	need_sadmin = "You need super admin privileges in order to be able to %s",
-	no_privilege = "You don't have the right privileges to perform this action",
-	no_jail_pos = "No jail position",
+	need_admin = "Je exiger administrateur privilèges à faire %s",
+	need_sadmin = "Je exiger super administrateur privilèges à faire %s",
+	no_privilege = "You don't have the right privilèges à faire ce",
+	no_jail_pos = "Non jail position",
 	invalid_x = "Invalid %s! %s",
 
 	-- F1 menu
@@ -106,15 +106,15 @@ local my_language = {
 	suspect_already_arrested = "The suspect is already in jail.",
 
 	-- Players
-	health = "Health: %s",
-	job = "Job: %s",
-	salary = "Salary: %s%s",
-	wallet = "Wallet: %s%s",
-	weapon = "Weapon: %s",
-	kills = "Kills: %s",
-	deaths = "Deaths: %s",
-	rpname_changed = "%s changed their RPName to: %s",
-	disconnected_player = "Disconnected player",
+	health = "La santé: %s",
+	job = "Emploi: %s",
+	salary = "Salaire: %s%s",
+	wallet = "Ton porte-monnaie: %s%s",
+	weapon = "l'arme: %s",
+	kills = "Les tue: %s",
+	deaths = "Des morts: %s",
+	rpname_changed = "%s s'appelle: %s",
+	disconnected_player = "Déconnecté utilisateur",
 
 	-- Teams
 	need_to_be_before = "You need to be %s first in order to be able to become %s",
@@ -541,4 +541,4 @@ local my_language = {
 -- If you want to know what your language code is, open GMod, select a language at the bottom right
 -- then enter gmod_language in console. It will show you the code.
 -- Make sure language code is a valid entry for the convar gmod_language.
-DarkRP.addLanguage("en", my_language)
+DarkRP.addLanguage("fr", my_language)
