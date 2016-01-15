@@ -61,6 +61,8 @@ SWEP.Primary.MaxDistance = 50000
 SWEP.Primary.NumBullets = 1
 SWEP.Primary.Trace = 1
 SWEP.Primary.Cone = 0.05
+SWEP.Primary.Sound = "Weapon_AR2.Single"
+SWEP.Primary.Recoil = 1
 
 -- Secondary attack info
 
@@ -74,6 +76,8 @@ SWEP.Secondary.MaxDistance = 50000
 SWEP.Secondary.NumBullets = 1
 SWEP.Secondary.Trace = 1
 SWEP.Secondary.Cone = 0.05
+SWEP.Secondary.Sound = "Weapon_AR2.Single"
+SWEP.Secondary.Recoil = 1
 
 -- Misc info
 
@@ -82,4 +86,38 @@ SWEP.AccurateCrosshair = true
 
 -- Advanced code, be careful!
 
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack then return end
+	self:TakePrimaryAmmo( 1 )
+	self.Weapon:EmitSound( self.Primary.Sound )
+	local bullet = {}
+	bullet.Num 	= self.Primary.NumBullets
+	bullet.Src 	= self.Owner:GetShootPos()
+	bullet.Dir 	= self.Owner:GetAimVector()
+	bullet.Spread 	= Vector( self.Primary.Cone, self.Primary.Cone, 0 )
+	bullet.Tracer	= self.Primary.Trace -- Show a tracer on every X bullets
+	bullet.Force	= self.Primary.PushForce
+	bullet.Damage	= self.Primary.Damage
+	bullet.AmmoType = "Pistol"
+	self.Owner:FireBullets( bullet )
+	self:ShootEffects()
+	self.Owner:ViewPunch( Angle( self.Primary.Recoil * -1, 0, 0 ) )
+end
 
+function SWEP:SecondaryAttack()
+	if not self:CanSecondaryAttack then return end
+	self:TakeSecondaryAmmo( 1 )
+	self.Weapon:EmitSound( self.Secondary.Sound )
+	local bullet = {}
+	bullet.Num 	= self.Secondary.NumBullets
+	bullet.Src 	= self.Owner:GetShootPos()
+	bullet.Dir 	= self.Owner:GetAimVector()
+	bullet.Spread 	= Vector( self.Secondary.Cone, self.Secondary.Cone, 0 )
+	bullet.Tracer	= self.Secondary.Trace -- Show a tracer on every X bullets
+	bullet.Force	= self.Secondary.PushForce
+	bullet.Damage	= self.Secondary.Damage
+	bullet.AmmoType = "Pistol"
+	self.Owner:FireBullets( bullet )
+	self:ShootEffects()
+	self.Owner:ViewPunch( Angle( self.Secondary.Recoil * -1, 0, 0 ) )
+end
