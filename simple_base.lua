@@ -101,21 +101,21 @@ end
 
 function SWEP:Reload()
 	self.Weapon:DefaultReload( ACT_VM_RELOAD )
-	if SWEP.ExtraReloadSound then
+	if not SWEP.ExtraReloadSound == "" then
 		self.Weapon:EmitSound( self.ExtraReloadSound )
 	end
 end
 
 function SWEP:Holster( wep )
 	return true
-	if SWEP.HolsterSound then
+	if not SWEP.HolsterSound == "" then
 		self.Weapon:EmitSound( self.HolsterSound )
 	end
 end
 
 function SWEP:Deploy()
 	return true
-	if SWEP.DeploySound then
+	if not SWEP.DeploySound == "" then
 		self.Weapon:EmitSound( self.DeploySound )
 	end
 end
