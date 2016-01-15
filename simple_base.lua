@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 -- Spawning info
 
 SWEP.Spawnable = true
