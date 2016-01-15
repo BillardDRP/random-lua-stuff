@@ -26,25 +26,25 @@ local my_language = {
 	invalid_x = "Invalid %s! %s",
 
 	-- F1 menu
-	f1ChatCommandTitle = "Chat commands",
-	f1Search = "Search...",
+	f1ChatCommandTitle = "Bork flerpen:",
+	f1Search = "Flerpin...",
 
 	-- Money things:
 	price = "Bork: %s%d",
 	priceTag = "Bork: %s",
 	reset_money = "%s bork flerpetti godem flerp' currence!"
-	has_given = "%s has given you %s",
-	you_gave = "You gave %s %s",
-	npc_killpay = "%s for killing an NPC!",
-	profit = "profit",
-	loss = "loss",
+	has_given = "%s gah floppen bork %s",
+	you_gave = "Goo flop %s %s",
+	npc_killpay = "%s flerp fussault da NPC!",
+	profit = "flup frit",
+	loss = "flerp",
 
 	-- backwards compatibility
-	deducted_x = "Deducted %s%d",
-	need_x = "Need %s%d",
+	deducted_x = "Flerpminui %s%d",
+	need_x = "Bork %s%d",
 
-	deducted_money = "Deducted %s",
-	need_money = "Need %s",
+	deducted_money = "Flerpmonnaie %s",
+	need_money = "Bork %s",
 
 	payday_message = "Payday! You received %s!",
 	payday_unemployed = "You received no salary because you are unemployed!",
