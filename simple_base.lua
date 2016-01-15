@@ -83,9 +83,10 @@ SWEP.Secondary.Recoil = 1
 
 -- Misc info
 
-SWEP.AccurateCrosshair = true
+SWEP.AccurateCrosshair = true -- 3D crosshair
+SWEP.m_WeaponDeploySpeed = 1 -- Multiplier of weapon deploy animation speed
 
--- Advanced code, be careful!
+-- Base code
 
 function SWEP:Initialize()
 	self:SetHoldType( self.HoldType )
