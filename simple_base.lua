@@ -63,7 +63,6 @@ SWEP.Primary.MaxDistance = 50000
 SWEP.Primary.NumBullets = 1
 SWEP.Primary.Trace = 1
 SWEP.Primary.Cone = 0.05
-SWEP.Primary.Sound = "Weapon_AR2.Single"
 SWEP.Primary.Recoil = 1
 
 -- Secondary attack info
@@ -78,18 +77,47 @@ SWEP.Secondary.MaxDistance = 50000
 SWEP.Secondary.NumBullets = 6
 SWEP.Secondary.Trace = 1
 SWEP.Secondary.Cone = 0.05
-SWEP.Secondary.Sound = "Weapon_Shotgun.Single"
 SWEP.Secondary.Recoil = 1
+
+-- Sound info
+
+SWEP.Primary.Sound = "Weapon_AR2.Single"
+SWEP.Secondary.Sound = "Weapon_Shotgun.Single"
+SWEP.HolsterSound = ""
+SWEP.DeploySound = ""
+SWEP.ExtraReloadSound = "" -- Sound played over the default reload sound
 
 -- Misc info
 
 SWEP.AccurateCrosshair = true -- 3D crosshair
 SWEP.m_WeaponDeploySpeed = 1 -- Multiplier of weapon deploy animation speed
+SWEP.ShouldDropOnDeath = false
 
 -- Base code
 
 function SWEP:Initialize()
 	self:SetHoldType( self.HoldType )
+end
+
+function SWEP:Reload()
+	self.Weapon:DefaultReload( ACT_VM_RELOAD )
+	if SWEP.ExtraReloadSound then
+		self.Weapon:EmitSound( self.ExtraReloadSound )
+	end
+end
+
+function SWEP:Holster( wep )
+	return true
+	if SWEP.HolsterSound then
+		self.Weapon:EmitSound( self.HolsterSound )
+	end
+end
+
+function SWEP:Deploy()
+	return true
+	if SWEP.DeploySound then
+		self.Weapon:EmitSound( self.DeploySound )
+	end
 end
 
 function SWEP:PrimaryAttack()
@@ -126,4 +154,8 @@ function SWEP:SecondaryAttack()
 	self.Owner:FireBullets( bullet )
 	self:ShootEffects()
 	self.Owner:ViewPunch( Angle( self.Secondary.Recoil * -1, 0, 0 ) )
+end
+
+function SWEP:ShouldDropOnDie()
+	return self.ShouldDropOnDeath
 end
