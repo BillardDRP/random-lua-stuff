@@ -27,8 +27,8 @@ hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
 		local green = GetConVarNumber( "billardhack_crosshair_g" )
 		local blue = GetConVarNumber( "billardhack_crosshair_b" )
 		local alph = GetConVarNumber( "billardhack_crosshair_alpha" )
-		draw.RoundedBox( 2, ScrW(), ScrH(), 30, 2, Color( red, green, blue, alph ) )
-		draw.RoundedBox( 2, ScrW(), ScrH(), 2, 30, Color( red, green, blue, alph ) )
+		draw.RoundedBox( 2, ScrW() / 2 - 15, ScrH() / 2, 30, 2, Color( red, green, blue, alph ) )
+		draw.RoundedBox( 2, ScrW() / 2, ScrH() / 2 - 15, 2, 30, Color( red, green, blue, alph ) )
 	end
 end )
 
