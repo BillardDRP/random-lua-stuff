@@ -1,4 +1,7 @@
 -- Created by Sir Francis Billard
+-- TODO:
+-- Panic Mode ( Disables all hacks )
+-- Rage Mode ( Enables all hacks )
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 
@@ -11,6 +14,7 @@ local concommand = concommand
 local FriendsList = {}
 
 local function FindPlayer( name )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	name = string.lower( name )
 	for k,v in pairs( player.GetAll() ) do
 		if string.lower( v:SteamID() ) == name then
@@ -33,6 +37,7 @@ local function FindPlayer( name )
 end
 
 local function AddToFriends( ply, cmd, args )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if not args[1] then return end
 	if not IsValid( ply ) then return end
 	if FindPlayer( args[1] ) then
@@ -49,6 +54,7 @@ local function AddToFriends( ply, cmd, args )
 end
 
 local function RemoveFromFriends( ply, cmd, args )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if not args[1] then return end
 	if not IsValid( ply ) then return end
 	if FindPlayer( args[1] ) then
@@ -69,6 +75,7 @@ local function RemoveFromFriends( ply, cmd, args )
 end
 
 local function IsOnFriendsList( ply )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if not IsValid( ply ) then return end
 	if not ply:IsPlayer() then return end
 	for k, v in pairs( FriendsList ) do
@@ -79,32 +86,38 @@ local function IsOnFriendsList( ply )
 end
 
 local function ShouldShootAt( thing )
-		return ( ( tobool( GetConVarNumber( "billardhack_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
+	return ( ( tobool( GetConVarNumber( "billardhack_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
 end
 
 local function GetAllTraceEntity()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	for k, v in pairs( player.GetAll() ) do
-	print( v:Nick() .. " is looking at " .. tostring( v:GetEyeTrace().Entity ) )
+		print( v:Nick() .. " is looking at " .. tostring( v:GetEyeTrace().Entity ) )
 	end
 end
 
 local function GetAllTraceTexture()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	for k, v in pairs( player.GetAll() ) do
-	print( v:Nick() .. " is looking at " .. tostring( v:GetEyeTrace().HitTexture ) )
+		print( v:Nick() .. " is looking at " .. tostring( v:GetEyeTrace().HitTexture ) )
 	end
 end
 
 local function GetAllTracePos()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	for k, v in pairs( player.GetAll() ) do
 		print( v:Nick() .. " is looking at exactly " .. tostring( v:GetEyeTrace().HitPos ) )
 	end
 end
 
 local function GetServerTick()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	print( "Current server tick is "..tonumber( ( 1 / engine.TickInterval() ) ) )
 end
 
 hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
 		local red = GetConVarNumber( "billardhack_crosshair_r" )
 		local green = GetConVarNumber( "billardhack_crosshair_g" )
@@ -118,6 +131,7 @@ hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
 end )
 
 hook.Add( "PreDrawHalos", "BillardHack_Wallhack", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
 		halo.Add( player.GetAll(), Color( 255, 0, 0 ), 0, 0, 2, true, true )
 		halo.Add( ents.FindByClass( "money_printer_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
@@ -138,6 +152,7 @@ hook.Add( "PreDrawHalos", "BillardHack_Wallhack", function()
 end )
 
 hook.Add("Think", "BillardHack_Aimbot", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_aimbot" ) ) then
 		local ply = LocalPlayer()
 		local trace = util.GetPlayerTrace( ply )
@@ -154,6 +169,7 @@ hook.Add("Think", "BillardHack_Aimbot", function()
 end )
 
 hook.Add("Think", "BillardHack_Triggerbot", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_triggerbot" ) ) then
 		local ply = LocalPlayer()
 		local trace = util.GetPlayerTrace( ply )
@@ -169,6 +185,7 @@ hook.Add("Think", "BillardHack_Triggerbot", function()
 end )
 
 hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
 		if ucmd:KeyDown( IN_JUMP ) then
 			if LocalPlayer():WaterLevel() <= 1 && LocalPlayer():GetMoveType() != MOVETYPE_LADDER && !LocalPlayer():IsOnGround() then
@@ -179,6 +196,7 @@ hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
 end )
 
 hook.Add( "HUDPaint", "BillardHack_ESP", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
 			for k, v in pairs( player.GetAll() ) do
@@ -217,6 +235,7 @@ hook.Add( "HUDPaint", "BillardHack_ESP", function()
 end )
 
 hook.Add( "HUDPaint", "BillardHack_HUD", function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_hud" ) ) then
 		if tobool( GetConVarNumber( "billardhack_hud_health" ) ) then
 			local health = LocalPlayer():Health()
@@ -226,9 +245,23 @@ hook.Add( "HUDPaint", "BillardHack_HUD", function()
 end )
 
 hook.Add( "ShouldDrawLocalPlayer", "BillardHack_DrawSelf", function( ply )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	return tobool( GetConVarNumber( "billardhack_draw_self" ) )
 end )
 
+hook.Add( "Think", "BillardHack_PanicModeReminder", function()
+	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
+		if PanicModeSpamTime >= CurTime() then
+			LocalPlayer():ChatPrint( "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
+			PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+		end
+	end
+end )
+
+CreateClientConVar( "billardhack_panic_mode", 0, true, false )
+CreateClientConVar( "billardhack_panic_mode_spam_time", 5, true, false )
+CreateClientConVar( "billardhack_rage_mode", 0, true, false )
 CreateClientConVar( "billardhack_crosshair", 0, true, false )
 CreateClientConVar( "billardhack_crosshair_r", 255, true, false )
 CreateClientConVar( "billardhack_crosshair_g", 50, true, false )
