@@ -73,6 +73,16 @@ hook.Add("Think", "BillardHack_Aimbot", function()
 	end
 end)
 
+hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
+	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
+		if ucmd:KeyDown( IN_JUMP ) then
+			if LocalPlayer():WaterLevel() <= 1 && LocalPlayer():GetMoveType() != MOVETYPE_LADDER && !LocalPlayer():IsOnGround() then
+				ucmd:RemoveKey( IN_JUMP )
+			end
+		end
+	end
+end )
+
 hook.Add( "HUDPaint", "BillardHack_ESP", function()
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
@@ -118,6 +128,8 @@ CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
 CreateClientConVar( "billardhack_wallhack", 0, true, false )
 
 CreateClientConVar( "billardhack_aimbot", 0, true, false )
+
+CreateClientConVar( "billardhack_bhop", 0, true, false )
 
 CreateClientConVar( "billardhack_esp", 0, true, false )
 CreateClientConVar( "billardhack_esp_info", 0, true, false )
