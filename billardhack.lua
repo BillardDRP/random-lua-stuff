@@ -92,6 +92,11 @@ local function ListAllFriends( ply, cmd, args )
 	print( "========================================" )
 end
 
+local function ClearFriendsList( ply, cmd, args )
+	if not IsValid( ply ) then return end
+	table.Empty( FriendsList )
+end
+
 local function ShouldShootAt( thing )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	return ( ( tobool( GetConVarNumber( "billardhack_bots_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
@@ -295,6 +300,7 @@ concommand.Add( "billardhack_trace_texture", GetAllTraceTexture )
 concommand.Add( "billardhack_trace_pos", GetAllTracePos )
 concommand.Add( "billardhack_friend_add", AddToFriends )
 concommand.Add( "billardhack_friend_remove", RemoveFromFriends )
+concommand.Add( "billardhack_friend_list", ListAllFriends )
 concommand.Add( "billardhack_tick", RemoveFromFriends )
 
 -- Custom cheats section
