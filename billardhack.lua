@@ -52,9 +52,9 @@ local function AddToFriends( ply, cmd, args )
 		local target = FindPlayer( tostring( args[1] ) )
 		if not IsOnFriendsList( target ) then
 			table.insert( FriendsList, #FriendsList, target:SteamID() )
-			ply:ChatPrint( target:Nick().." has been added to your BillardHack friends list." )
+			ply:ChatPrint( target:Nick() .. " has been added to your BillardHack friends list." )
 		else
-			ply:ChatPrint( target:Nick().." is already on your BillardHack friends list." )
+			ply:ChatPrint( target:Nick() .. " is already on your BillardHack friends list." )
 		end
 	else
 		ply:ChatPrint( "Player not found." )
@@ -73,9 +73,9 @@ local function RemoveFromFriends( ply, cmd, args )
 					table.RemoveByValue( FriendsList, ply:SteamID() )
 				end
 			end
-			ply:ChatPrint( target:Nick().." has been removed from your BillardHack friends list." )
+			ply:ChatPrint( target:Nick() .. " has been removed from your BillardHack friends list." )
 		else
-			ply:ChatPrint( target:Nick().." is not on your BillardHack friends list." )
+			ply:ChatPrint( target:Nick() .. " is not on your BillardHack friends list." )
 		end
 	else
 		ply:ChatPrint( "Player not found." )
@@ -125,7 +125,7 @@ end
 
 local function GetServerTick()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
-	print( "Current server tick is "..tonumber( ( 1 / engine.TickInterval() ) ) )
+	print( "Current server tick is " .. tonumber( ( 1 / engine.TickInterval() ) ) )
 end
 
 hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
@@ -313,7 +313,7 @@ local function IdentifyMurderers( ply, cmd, args )
 	print( "========================================" )
 	for k, v in pairs( ents.GetAll() ) do
 		if v:GetClass() == "weapon_mu_knife" then
-			print( v:GetOwner():Nick().." is a murderer." )
+			print( v:GetOwner():Nick() .. " is a murderer." )
 		end
 	end
 	print( "========================================" )
