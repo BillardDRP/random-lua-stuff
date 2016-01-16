@@ -1,7 +1,13 @@
--- Inspired by smeghack
+-- Inspired by SmegHack :)
 -- Created by Sir Francis Billard
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
+
+local hook = hook
+local draw = draw
+local player = player
+local ents = ents
+local concommand = concommand
 
 local function GetAllTraceEntity()
 	for k, v in pairs( player.GetAll() ) do
@@ -51,6 +57,40 @@ hook.Add( "PreDrawHalos", "BillardHack_Wallhack", function()
 	end
 end )
 
+hook.Add( "HUDPaint", "BillardHack_ESP", function()
+	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
+		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
+			for k, v in pairs( player.GetAll() ) do
+				local pos = ( v:GetShootPos() + Vector( 0, 0, 20 ) ):ToScreen()
+				local clr = team.GetColor( v:Team() )
+				local outlineClr = Color( 0, 0, 0, 255 )
+				draw.SimpleTextOutlined( v:Nick(), "Default", pos.x, pos.y - 45, clr, 1, 1, 1, outlineClr )
+				draw.SimpleTextOutlined( "Health: "..v:Health(), "Default", pos.x, pos.y -30, clr, 1, 1, 1, outlineClr )
+				draw.SimpleTextOutlined( "Armor: "..v:Armor(), "Default", pos.x, pos.y - 15, clr, 1, 1, 1, outlineClr )
+				if v:GetActiveWeapon():IsValid() then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
+			end
+		end
+		--[[
+		if tobool( GetConVarNumber( "billardhack_esp_boxes" ) ) then
+			for k, v in pairs( player.GetAll() ) do
+				local pos = ( v:GetShootPos() + Vector( 0, 0, 20 ) ):ToScreen()
+				local clr = team.GetColor( v:Team() )
+				draw.RoundedBox( 0, v:OBBMaxs().x, v:OBBMins(), 80, 2, clr )
+			end
+		end
+		]]
+	end
+end )
+
+hook.Add( "HUDPaint", "BillardHack_HUD", function()
+	if tobool( GetConVarNumber( "billardhack_hud" ) ) then
+		if tobool( GetConVarNumber( "billardhack_hud_health" ) ) then
+			local health = LocalPlayer():Health()
+			local armor = LocalPlayer():Armor()
+		end
+	end
+end )
+
 CreateClientConVar( "billardhack_crosshair", 0, true, false )
 CreateClientConVar( "billardhack_crosshair_r", 255, true, false )
 CreateClientConVar( "billardhack_crosshair_g", 50, true, false )
@@ -65,30 +105,9 @@ CreateClientConVar( "billardhack_esp", 0, true, false )
 CreateClientConVar( "billardhack_esp_info", 0, true, false )
 CreateClientConVar( "billardhack_esp_boxes", 0, true, false )
 
-local function BillardHackESP()
-	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
-		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
-			for k, v in pairs( player.GetAll() ) do
-				local pos = ( v:GetShootPos() + Vector( 0, 0, 20 ) ):ToScreen()
-				local clr = team.GetColor( v:Team() )
-				local outlineClr = Color( 0, 0, 0, 255 )
-				draw.SimpleTextOutlined( v:Nick(), "Default", pos.x, pos.y - 45, clr, 1, 1, 1, outlineClr )
-				draw.SimpleTextOutlined( "Health: "..v:Health(), "Default", pos.x, pos.y -30, clr, 1, 1, 1, outlineClr )
-				draw.SimpleTextOutlined( "Armor: "..v:Armor(), "Default", pos.x, pos.y - 15, clr, 1, 1, 1, outlineClr )
-				if v:GetActiveWeapon():IsValid() then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
-			end
-		end
-		--[[if tobool( GetConVarNumber( "billardhack_esp_boxes" ) ) then
-			for k, v in pairs( player.GetAll() ) do
-				local pos = ( v:GetShootPos() + Vector( 0, 0, 20 ) ):ToScreen()
-				local clr = team.GetColor( v:Team() )
-				draw.RoundedBox( 0, v:OBBMaxs().x, v:OBBMins(), 80, 2, clr )
-			end
-		end]]
-	end
-end
-
-hook.Add( "HUDPaint", "BillardHackESP", BillardHackESP )
+CreateClientConVar( "billardhack_hud", 0, true, false )
+CreateClientConVar( "billardhack_hud_health", 0, true, false )
+CreateClientConVar( "billardhack_hud_armor", 0, true, false )
 
 concommand.Add( "billardhack_trace_entity", GetAllTraceEntity )
 concommand.Add( "billardhack_trace_texture", GetAllTraceTexture )
