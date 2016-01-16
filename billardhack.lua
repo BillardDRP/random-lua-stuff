@@ -33,6 +33,17 @@ local function FindPlayer( name )
 	end
 end
 
+local function IsOnFriendsList( ply )
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
+	if not IsValid( ply ) then return end
+	if not ply:IsPlayer() then return end
+	for k, v in pairs( FriendsList ) do
+		if v == ply:SteamID() then
+			return true
+		end
+	end
+end
+
 local function AddToFriends( ply, cmd, args )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if not args[1] then return end
@@ -68,17 +79,6 @@ local function RemoveFromFriends( ply, cmd, args )
 		end
 	else
 		ply:ChatPrint( "Player not found." )
-	end
-end
-
-local function IsOnFriendsList( ply )
-	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
-	if not IsValid( ply ) then return end
-	if not ply:IsPlayer() then return end
-	for k, v in pairs( FriendsList ) do
-		if v == ply:SteamID() then
-			return true
-		end
 	end
 end
 
@@ -205,7 +205,7 @@ hook.Add( "HUDPaint", "BillardHack_ESP", function()
 				draw.SimpleTextOutlined( "Health: "..v:Health(), "Default", pos.x, pos.y -30, clr, 1, 1, 1, outlineClr )
 				draw.SimpleTextOutlined( "Armor: "..v:Armor(), "Default", pos.x, pos.y - 15, clr, 1, 1, 1, outlineClr )
 				if IsValid( v:GetActiveWeapon() ) then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
-				if IsOnFriendsList( v ) then draw.SimpleTextOutlined( "FRIEND", "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
+				if IsOnFriendsList( v ) then draw.SimpleTextOutlined( "FRIEND", "Default", pos.x, pos.y + 15, clr, 1, 1, 1, outlineClr ) end
 			end
 		end
 		--[[ -- Unused scripts
