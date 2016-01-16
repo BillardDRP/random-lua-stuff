@@ -1,4 +1,3 @@
--- Inspired by SmegHack :)
 -- Created by Sir Francis Billard
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
@@ -9,8 +8,70 @@ local player = player
 local ents = ents
 local concommand = concommand
 
+local FriendsList = {}
+
+local function FindPlayer( name )
+	name = string.lower( name )
+	for k,v in pairs( player.GetAll() ) do
+		if string.lower( v:SteamID() ) == name then
+			return v
+		end
+		if string.lower( v:UniqueID() ) == name then
+			return v
+		end
+		local nick = string.lower( v:Nick()  )
+		if string.find( nick, name ) then
+			return v
+		end
+		if v.SteamName then
+			local sname = string.lower( v:SteamName() )
+			if string.find( sname, name ) then
+				return v
+			end
+		end
+	end
+end
+
+local function AddToFriends( ply, cmd, args )
+	if not args[1] then return end
+	if not IsValid( ply ) then return end
+	if FindPlayer( args[1] ) then
+		local target = FindPlayer( tostring( args[1] ) )
+		table.insert( FriendsList, #FriendsList, target:SteamID() )
+		ply:ChatPrint( target:Nick().." has been added to your BillardHack friends." )
+	else
+		ply:ChatPrint( "Player not found." )
+	end
+end
+
+local function RemoveFromFriends( ply, cmd, args )
+	if not args[1] then return end
+	if not IsValid( ply ) then return end
+	if FindPlayer( args[1] ) then
+		local target = FindPlayer( tostring( args[1] ) )
+		for k, v in pairs( FriendsList ) do
+			if v == ply:SteamID() then
+				table.RemoveByValue( FriendsList, ply:SteamID() )
+			end
+		end
+		ply:ChatPrint( target:Nick().." has been removed from your BillardHack friends." )
+	else
+		ply:ChatPrint( "Player not found." )
+	end
+end
+
+local function IsOnFriendsList( ply )
+	if not IsValid( ply ) then return end
+	if not ply:IsPlayer() then return end
+	for k, v in pairs( FriendsList ) do
+		if v == ply:SteamID() then
+			return true
+		end
+	end
+end
+
 local function ShouldShootAt( thing )
-		return ( ( tobool( GetConVarNumber( "billardhack_target_npcs" ) ) and thing:IsNPC() ) or thing:IsPlayer() ) and IsValid( thing )
+		return ( ( tobool( GetConVarNumber( "billardhack_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
 end
 
 local function GetAllTraceEntity()
@@ -75,7 +136,7 @@ hook.Add("Think", "BillardHack_Aimbot", function()
 			end
 		end
 	end
-end)
+end )
 
 hook.Add("Think", "BillardHack_Triggerbot", function()
 	if tobool( GetConVarNumber( "billardhack_triggerbot" ) ) then
@@ -90,7 +151,7 @@ hook.Add("Think", "BillardHack_Triggerbot", function()
 			end
 		end
 	end
-end)
+end )
 
 hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
 	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
@@ -158,3 +219,5 @@ CreateClientConVar( "billardhack_hud_armor", 0, true, false )
 concommand.Add( "billardhack_trace_entity", GetAllTraceEntity )
 concommand.Add( "billardhack_trace_texture", GetAllTraceTexture )
 concommand.Add( "billardhack_trace_pos", GetAllTracePos )
+concommand.Add( "billardhack_friend_add", AddToFriends )
+concommand.Add( "billardhack_friend_remove", RemoveFromFriends )
