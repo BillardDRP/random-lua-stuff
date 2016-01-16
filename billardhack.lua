@@ -57,6 +57,22 @@ hook.Add( "PreDrawHalos", "BillardHack_Wallhack", function()
 	end
 end )
 
+hook.Add("Think", "BillardHack_Aimbot", function()
+	if tobool( GetConVarNumber( "billardhack_aimbot" ) ) then
+		local ply = LocalPlayer()
+		local trace = util.GetPlayerTrace( ply )
+		local traceRes = util.TraceLine( trace )
+		if traceRes.HitNonWorld then
+			local target = traceRes.Entity
+			if target:IsPlayer() then
+				local targethead = target:LookupBone( "ValveBiped.Bip01_Head1" )
+				local targetheadpos, targetheadang = target:GetBonePosition( targethead )
+				ply:SetEyeAngles( ( targetheadpos - ply:GetShootPos() ):Angle() )
+			end
+		end
+	end
+end)
+
 hook.Add( "HUDPaint", "BillardHack_ESP", function()
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
@@ -100,6 +116,8 @@ CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
 CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
 
 CreateClientConVar( "billardhack_wallhack", 0, true, false )
+
+CreateClientConVar( "billardhack_aimbot", 0, true, false )
 
 CreateClientConVar( "billardhack_esp", 0, true, false )
 CreateClientConVar( "billardhack_esp_info", 0, true, false )
