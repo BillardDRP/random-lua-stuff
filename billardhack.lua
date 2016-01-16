@@ -311,7 +311,7 @@ local function IdentifyMurderers( ply, cmd, args )
 	if not IsValid( ply ) then return end
 	print( "LIST OF MURDERERS" )
 	print( "========================================" )
-	for k, v in pairs(ents.GetAll()) do
+	for k, v in pairs( ents.GetAll() ) do
 		if v:GetClass() == "weapon_mu_knife" then
 			print( v:GetOwner():Nick().." is a murderer." )
 		end
