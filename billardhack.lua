@@ -21,10 +21,14 @@ local function GetAllTracePos()
 	end
 end
 
-hook.Add( "HUDPaint", "BillardHack_Crosshair" function()
+hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
 	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
-		draw.RoundedBox( 2, ScrW(), ScrH(), 30, 2, Color( GetConVarNumber( "billardhack_crosshair_r" ), GetConVarNumber( "billardhack_crosshair_g" ), GetConVarNumber( "billardhack_crosshair_b" ), GetConVarNumber( "billardhack_crosshair_alpha" ) ) )
-		draw.RoundedBox( 2, ScrW(), ScrH(), 2, 30, Color( GetConVarNumber( "billardhack_crosshair_r" ), GetConVarNumber( "billardhack_crosshair_g" ), GetConVarNumber( "billardhack_crosshair_b" ), GetConVarNumber( "billardhack_crosshair_alpha" ) ) )
+		local red = GetConVarNumber( "billardhack_crosshair_r" )
+		local green = GetConVarNumber( "billardhack_crosshair_g" )
+		local blue = GetConVarNumber( "billardhack_crosshair_b" )
+		local alph = GetConVarNumber( "billardhack_crosshair_alpha" )
+		draw.RoundedBox( 2, ScrW(), ScrH(), 30, 2, Color( red, green, blue, alph ) )
+		draw.RoundedBox( 2, ScrW(), ScrH(), 2, 30, Color( red, green, blue, alph ) )
 	end
 end )
 
