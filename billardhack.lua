@@ -1,8 +1,4 @@
 -- Created by Sir Francis Billard
--- TODO:
--- Panic Mode ( Disables all hacks )
--- Rage Mode ( Enables all hacks )
--- ESP/Wallhack target NPCs
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 
