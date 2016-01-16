@@ -73,6 +73,21 @@ hook.Add("Think", "BillardHack_Aimbot", function()
 	end
 end)
 
+hook.Add("Think", "BillardHack_Triggerbot", function()
+	if tobool( GetConVarNumber( "billardhack_triggerbot" ) ) then
+		local ply = LocalPlayer()
+		local trace = util.GetPlayerTrace( ply )
+		local traceRes = util.TraceLine( trace )
+		if traceRes.HitNonWorld then
+			local target = traceRes.Entity
+			if target:IsPlayer() then
+				LocalPlayer():ConCommand("+attack")
+				timer.Simple( 0.1, function() LocalPlayer():ConCommand("-attack") end )
+			end
+		end
+	end
+end)
+
 hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
 	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
 		if ucmd:KeyDown( IN_JUMP ) then
@@ -124,17 +139,13 @@ CreateClientConVar( "billardhack_crosshair_b", 50, true, false )
 CreateClientConVar( "billardhack_crosshair_alpha", 200, true, false )
 CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
 CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
-
 CreateClientConVar( "billardhack_wallhack", 0, true, false )
-
 CreateClientConVar( "billardhack_aimbot", 0, true, false )
-
+CreateClientConVar( "billardhack_triggerbot", 0, true, false )
 CreateClientConVar( "billardhack_bhop", 0, true, false )
-
 CreateClientConVar( "billardhack_esp", 0, true, false )
 CreateClientConVar( "billardhack_esp_info", 0, true, false )
 CreateClientConVar( "billardhack_esp_boxes", 0, true, false )
-
 CreateClientConVar( "billardhack_hud", 0, true, false )
 CreateClientConVar( "billardhack_hud_health", 0, true, false )
 CreateClientConVar( "billardhack_hud_armor", 0, true, false )
