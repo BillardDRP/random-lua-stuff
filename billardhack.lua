@@ -1,7 +1,4 @@
 -- Created by Sir Francis Billard
--- TODO:
--- Panic Mode ( Disables all hacks )
--- Rage Mode ( Enables all hacks )
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 
@@ -87,7 +84,7 @@ end
 
 local function ShouldShootAt( thing )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
-	return ( ( tobool( GetConVarNumber( "billardhack_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
+	return ( ( tobool( GetConVarNumber( "billardhack_bots_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
 end
 
 local function GetAllTraceEntity()
@@ -208,7 +205,7 @@ hook.Add( "HUDPaint", "BillardHack_ESP", function()
 				draw.SimpleTextOutlined( "Health: "..v:Health(), "Default", pos.x, pos.y -30, clr, 1, 1, 1, outlineClr )
 				draw.SimpleTextOutlined( "Armor: "..v:Armor(), "Default", pos.x, pos.y - 15, clr, 1, 1, 1, outlineClr )
 				if IsValid( v:GetActiveWeapon() ) then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
-				if IsOnFriendsList( v ) then draw.SimpleTextOutlined( "FRIEND", "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr )
+				if IsOnFriendsList( v ) then draw.SimpleTextOutlined( "FRIEND", "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
 			end
 		end
 		--[[ -- Unused scripts
