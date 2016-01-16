@@ -128,6 +128,15 @@ local function GetServerTick()
 	print( "Current server tick is " .. tonumber( ( 1 / engine.TickInterval() ) ) )
 end
 
+local function GetPlayerTeams( ply, cmd, args )
+	print( "PLAYER TEAMS" )
+	print( "========================================" )
+	for k, v in pairs( player.GetAll() ) do
+		print( v:Nick() .. " is on team " .. team.GetName( v:Team() ) )
+	end
+	print( "========================================" )
+end
+
 hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
@@ -301,6 +310,7 @@ concommand.Add( "billardhack_trace_pos", GetAllTracePos )
 concommand.Add( "billardhack_friend_add", AddToFriends )
 concommand.Add( "billardhack_friend_remove", RemoveFromFriends )
 concommand.Add( "billardhack_friend_list", ListAllFriends )
+concommand.Add( "billardhack_teams", GetPlayerTeams )
 concommand.Add( "billardhack_tick", RemoveFromFriends )
 
 -- Custom cheats section
