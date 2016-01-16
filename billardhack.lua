@@ -175,13 +175,14 @@ hook.Add( "HUDPaint", "BillardHack_ESP", function()
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
 			for k, v in pairs( player.GetAll() ) do
+				if not IsValid( v ) then return end
 				local pos = ( v:GetShootPos() + Vector( 0, 0, 20 ) ):ToScreen()
 				local clr = team.GetColor( v:Team() )
 				local outlineClr = Color( 0, 0, 0, 255 )
 				draw.SimpleTextOutlined( v:Nick(), "Default", pos.x, pos.y - 45, clr, 1, 1, 1, outlineClr )
 				draw.SimpleTextOutlined( "Health: "..v:Health(), "Default", pos.x, pos.y -30, clr, 1, 1, 1, outlineClr )
 				draw.SimpleTextOutlined( "Armor: "..v:Armor(), "Default", pos.x, pos.y - 15, clr, 1, 1, 1, outlineClr )
-				if v:GetActiveWeapon():IsValid() then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
+				if IsValid( v:GetActiveWeapon() ) then draw.SimpleTextOutlined( v:GetActiveWeapon():GetPrintName(), "Default", pos.x, pos.y, clr, 1, 1, 1, outlineClr ) end
 			end
 		end
 		--[[
