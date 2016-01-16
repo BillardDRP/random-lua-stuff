@@ -82,6 +82,16 @@ local function RemoveFromFriends( ply, cmd, args )
 	end
 end
 
+local function ListAllFriends( ply, cmd, args )
+	if not IsValid( ply ) then return end
+	print( "FRIENDS LIST" )
+	print( "========================================" )
+	for k, v in pairs( FriendsList ) do
+		print( v )
+	end
+	print( "========================================" )
+end
+
 local function ShouldShootAt( thing )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	return ( ( tobool( GetConVarNumber( "billardhack_bots_target_npcs" ) ) and thing:IsNPC() ) or ( thing:IsPlayer() and not IsOnFriendsList( thing ) ) )  and IsValid( thing )
@@ -249,7 +259,7 @@ end )
 hook.Add( "Think", "BillardHack_PanicModeReminder", function()
 	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
-		if PanicModeSpamTime >= CurTime() then
+		if PanicModeSpamTime <= CurTime() then
 			LocalPlayer():ChatPrint( "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
 			PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 		end
