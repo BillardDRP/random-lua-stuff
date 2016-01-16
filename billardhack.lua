@@ -37,8 +37,12 @@ local function AddToFriends( ply, cmd, args )
 	if not IsValid( ply ) then return end
 	if FindPlayer( args[1] ) then
 		local target = FindPlayer( tostring( args[1] ) )
-		table.insert( FriendsList, #FriendsList, target:SteamID() )
-		ply:ChatPrint( target:Nick().." has been added to your BillardHack friends." )
+		if not IsOnFriendsList( target ) then
+			table.insert( FriendsList, #FriendsList, target:SteamID() )
+			ply:ChatPrint( target:Nick().." has been added to your BillardHack friends list." )
+		else
+			ply:ChatPrint( target:Nick().." is already on your BillardHack friends list." )
+		end
 	else
 		ply:ChatPrint( "Player not found." )
 	end
@@ -49,12 +53,16 @@ local function RemoveFromFriends( ply, cmd, args )
 	if not IsValid( ply ) then return end
 	if FindPlayer( args[1] ) then
 		local target = FindPlayer( tostring( args[1] ) )
-		for k, v in pairs( FriendsList ) do
-			if v == ply:SteamID() then
-				table.RemoveByValue( FriendsList, ply:SteamID() )
+		if IsOnFriendsList( target ) then
+			for k, v in pairs( FriendsList ) do
+				if v == ply:SteamID() then
+					table.RemoveByValue( FriendsList, ply:SteamID() )
+				end
 			end
+			ply:ChatPrint( target:Nick().." has been removed from your BillardHack friends list." )
+		else
+			ply:ChatPrint( target:Nick().." is not on your BillardHack friends list." )
 		end
-		ply:ChatPrint( target:Nick().." has been removed from your BillardHack friends." )
 	else
 		ply:ChatPrint( "Player not found." )
 	end
