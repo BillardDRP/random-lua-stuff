@@ -7,9 +7,21 @@ local ScrW = ScrW
 local ScrH = ScrH
 local Color = Color
 
+local function GetAmmo( ply )
+   local weap = ply:GetActiveWeapon()
+   if not weap or not ply:Alive() then return -1 end
+
+   local ammo_inv = weap:Ammo1() or 0
+   local ammo_clip = weap:Clip1() or 0
+   local ammo_max = weap.Primary.ClipSize or 0
+
+   return ammo_clip, ammo_max, ammo_inv
+end
+
 hook.Add( "HUDPaint", "G3XRP_HUD", function()
 	local lp = LocalPlayer()
 	local wep = LocalPlayer():GetActiveWeapon()
+	local clip1, max1, ammo1 = GetAmmo( LocalPlayer() )
 	local health = LocalPlayer():Health()
 	local armor = LocalPlayer():Armor()
 	-- Layer 1
@@ -20,14 +32,8 @@ hook.Add( "HUDPaint", "G3XRP_HUD", function()
 	draw.DrawText( DarkRP.getPhrase( "job", lp:getDarkRPVar( "job" ) or "" ), "Arial24", ScrW() / 48, ScrH() / 1.29, Color( 255, 255, 255, 255 ) )
 	draw.DrawText( DarkRP.getPhrase( "wallet", DarkRP.formatMoney( LocalPlayer():getDarkRPVar( "money" ) ), "" ), "Arial24", ScrW() / 48, ScrH() / 1.19, Color( 255, 255, 255, 255 ) )
 	draw.DrawText( DarkRP.getPhrase( "salary", DarkRP.formatMoney( lp:getDarkRPVar( "salary" ) ), "" ), "Arial24", ScrW() / 5.05, ScrH() / 1.39, Color( 255, 255, 255, 255 ) )
-	if IsValid( wep ) then draw.DrawText( wep:Clip1() or 0, "Arial24", ScrW()/1.09, ScrH() / 1.11, Color( 60, 0, 80, 255 ) ) end
-	if IsValid( wep ) then draw.DrawText( wep:GetMaxClip1() or 0, "Arial24", ScrW() / 1.09, ScrH() / 1.06, Color( 60, 0, 80, 255 ) ) end
-	draw.DrawText( lp:Nick(), "Arial24", ScrW() / 48, ScrH() / 1.39, Color( 255, 255, 255, 255 ) )
-	draw.DrawText( DarkRP.getPhrase( "job", lp:getDarkRPVar( "job" ) or "" ), "Arial24", ScrW() / 48, ScrH() / 1.29, Color( 255, 255, 255, 255 ) )
-	draw.DrawText( DarkRP.getPhrase( "wallet", DarkRP.formatMoney( LocalPlayer():getDarkRPVar("money")), "" ), "Arial24", ScrW() / 48, ScrH() / 1.19, Color( 255, 255, 255, 255))
-	draw.DrawText( DarkRP.getPhrase( "salary", DarkRP.formatMoney( lp:getDarkRPVar( "salary" ) ), ""), "Arial24", ScrW() / 5.05, ScrH() / 1.39, Color( 255, 255, 255, 255))
-	if IsValid( wep ) then draw.DrawText( wep:Clip1() or 0, "Arial24", ScrW() / 1.09, ScrH() / 1.11, Color( 255, 255, 255, 255 ) ) end
-	if IsValid( wep ) then draw.DrawText( wep:GetMaxClip1() or 0, "Arial24", ScrW() / 1.09, ScrH() / 1.06, Color( 255, 255, 255, 255 ) ) end
+	draw.DrawText( clip1 or 0, "Arial24", ScrW()/1.09, ScrH() / 1.11, Color( 60, 0, 80, 255 ) )
+	draw.DrawText( ammo1 or 0, "Arial24", ScrW() / 1.09, ScrH() / 1.06, Color( 60, 0, 80, 255 ) )
 	if health > 0 then
 		draw.RoundedBox( 4, ScrW() / 48, ScrH() / 1.11, ( ScrW()/4.17 * health ) / 100, ScrH() / 18, Color( 255, 0, 0, 255 ) )
 	end
