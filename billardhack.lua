@@ -9,6 +9,15 @@ local ents = ents
 local concommand = concommand
 local string = string
 local table = table
+local _G = table.Copy( _G )
+local tobool = _G.tobool
+local tostring = _G.tostring
+local tonumber = _G.tonumber
+local GetConVarNumber = _G.GetConVarNumber
+local pairs = _G.pairs
+local IsValid = _G.IsValid
+local print = _G.print
+local LocalPlayer = _G.LocalPlayer
 
 local FriendsList = {}
 
