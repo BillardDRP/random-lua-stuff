@@ -275,7 +275,7 @@ hook.Add( "HUDPaint", "BillardHack_HUD", function()
 		if health > 0 then
 			draw.RoundedBox(4, ScrW()/32, ScrH()/1.18, ( ScrW()/6.4 * health ) / 100, ScrH()/10.8, Color(255, 0, 0, 255)) -- Health
 		end
-		if armor > 0 and not health <= 0 then
+		if armor > 0 and not ( health <= 0 ) then
 			draw.RoundedBox(4, ScrW()/32, ScrH()/1.11, ( ScrW()/6.4 * armor ) / 100, ScrH()/27, Color(0, 0, 255, 255)) -- Armor
 		end
 	end
