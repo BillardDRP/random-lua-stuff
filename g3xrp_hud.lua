@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 local draw = draw
 local hook = hook
 local LocalPlayer = LocalPlayer
