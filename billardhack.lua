@@ -7,6 +7,8 @@ local draw = draw
 local player = player
 local ents = ents
 local concommand = concommand
+local string = string
+local table = table
 
 local FriendsList = {}
 
