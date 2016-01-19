@@ -2,22 +2,22 @@
 
 Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 
-local hook = hook
-local draw = draw
-local player = player
-local ents = ents
-local concommand = concommand
-local string = string
-local table = table
-local _G = table.Copy( _G )
-local tobool = _G.tobool
-local tostring = _G.tostring
-local tonumber = _G.tonumber
-local GetConVarNumber = _G.GetConVarNumber
-local pairs = _G.pairs
-local IsValid = _G.IsValid
-local print = _G.print
-local LocalPlayer = _G.LocalPlayer
+local hook =			hook
+local draw =			draw
+local player =			player
+local ents =			ents
+local concommand =		concommand
+local string =			string
+local table =			table
+local _G =			table.Copy( _G )
+local tobool =			_G.tobool
+local tostring =		_G.tostring
+local tonumber =		_G.tonumber
+local GetConVarNumber =		_G.GetConVarNumber
+local pairs =			_G.pairs
+local IsValid =			_G.IsValid
+local print =			_G.print
+local LocalPlayer =		_G.LocalPlayer
 
 local FriendsList = {}
 
@@ -271,12 +271,12 @@ hook.Add( "HUDPaint", "BillardHack_HUD", function()
 	if tobool( GetConVarNumber( "billardhack_hud" ) ) then
 		local health = LocalPlayer():Health()
 		local armor = LocalPlayer():Armor()
-		draw.RoundedBox(4, ScrW()/96, ScrH()/1.23, ScrW()/5.05, ScrH()/6, Color(0, 0, 0, 255)) -- Background
+		draw.RoundedBox( 4, ScrW() / 96, ScrH() / 1.23, ScrW() / 5.05, ScrH() / 6, Color( 0, 0, 0, 255 ) ) -- Background
 		if health > 0 then
-			draw.RoundedBox(4, ScrW()/32, ScrH()/1.18, ( ScrW()/6.4 * health ) / 100, ScrH()/10.8, Color(255, 0, 0, 255)) -- Health
+			draw.RoundedBox( 4, ScrW() / 32, ScrH() / 1.18, ( ScrW() / 6.4 * health ) / 100, ScrH() / 10.8, Color( 255, 0, 0, 255 ) ) -- Health
 		end
 		if armor > 0 and not ( health <= 0 ) then
-			draw.RoundedBox(4, ScrW()/32, ScrH()/1.11, ( ScrW()/6.4 * armor ) / 100, ScrH()/27, Color(0, 0, 255, 255)) -- Armor
+			draw.RoundedBox( 4, ScrW() / 32, ScrH() / 1.11, ( ScrW() / 6.4 * armor ) / 100, ScrH() / 27, Color( 0, 0, 255, 255 ) ) -- Armor
 		end
 	end
 end )
