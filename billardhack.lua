@@ -1,25 +1,33 @@
 -- Created by Sir Francis Billard
 
-Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
-
-local hook =			hook
-local draw =			draw
-local player =			player
-local ents =			ents
-local concommand =		concommand
-local string =			string
-local table =			table
-local _G =			table.Copy( _G )
-local tobool =			_G.tobool
-local tostring =		_G.tostring
-local tonumber =		_G.tonumber
+local hook =				hook
+local draw =				draw
+local player =				player
+local ents =				ents
+local concommand =			concommand
+local string =				string
+local table =				table
+local chat =				chat
+local halo =				halo
+local _G =					table.Copy( _G )
+local tobool =				_G.tobool
+local tostring =			_G.tostring
+local tonumber =			_G.tonumber
 local GetConVarNumber =		_G.GetConVarNumber
-local pairs =			_G.pairs
-local IsValid =			_G.IsValid
-local print =			_G.print
-local LocalPlayer =		_G.LocalPlayer
+local pairs =				_G.pairs
+local IsValid =				_G.IsValid
+local print =				_G.print
+local LocalPlayer =			_G.LocalPlayer
 
+local ChatColor = Color( 0, 255, 180, 255 )
+local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
+
+
+local function InitBillardHack()
+	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
+	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
+end
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -63,12 +71,12 @@ local function AddToFriends( ply, cmd, args )
 		local target = FindPlayer( tostring( args[1] ) )
 		if not IsOnFriendsList( target ) then
 			table.insert( FriendsList, #FriendsList, target:SteamID() )
-			ply:ChatPrint( target:Nick() .. " has been added to your BillardHack friends list." )
+			chat.AddText( ChatColor, target:Nick() .. " has been added to your BillardHack friends list." )
 		else
-			ply:ChatPrint( target:Nick() .. " is already on your BillardHack friends list." )
+			chat.AddText( ChatColor, target:Nick() .. " is already on your BillardHack friends list." )
 		end
 	else
-		ply:ChatPrint( "Player not found." )
+		chat.AddText( ChatColor, "Player not found." )
 	end
 end
 
@@ -84,12 +92,12 @@ local function RemoveFromFriends( ply, cmd, args )
 					table.RemoveByValue( FriendsList, ply:SteamID() )
 				end
 			end
-			ply:ChatPrint( target:Nick() .. " has been removed from your BillardHack friends list." )
+			chat.AddText( ChatColor, target:Nick() .. " has been removed from your BillardHack friends list." )
 		else
-			ply:ChatPrint( target:Nick() .. " is not on your BillardHack friends list." )
+			chat.AddText( ChatColor, target:Nick() .. " is not on your BillardHack friends list." )
 		end
 	else
-		ply:ChatPrint( "Player not found." )
+		chat.AddText( ChatColor, "Player not found." )
 	end
 end
 
@@ -290,7 +298,7 @@ hook.Add( "Think", "BillardHack_PanicModeReminder", function()
 	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
 		if PanicModeSpamTime <= CurTime() then
-			LocalPlayer():ChatPrint( "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
+			chat.AddText( PanicChatColor, "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
 			PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 		end
 	end
@@ -357,3 +365,7 @@ end )
 CreateClientConVar( "billardhack_murder_esp", 0, true, false )
 
 concommand.Add( "billardhack_murder_list", IdentifyMurderers )
+
+-- Initialize
+
+InitBillardHack()
