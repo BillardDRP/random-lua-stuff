@@ -19,6 +19,8 @@ local IsValid =				_G.IsValid
 local print =				_G.print
 local LocalPlayer =			_G.LocalPlayer
 
+math.randomseed( os.time() ) -- For the extra paranoid
+
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
