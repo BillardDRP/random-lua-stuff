@@ -9,11 +9,11 @@ local string =				string
 local table =				table
 local chat =				chat
 local halo =				halo
-local _G =					table.Copy( _G )
+local _G =				table.Copy( _G )
 local tobool =				_G.tobool
 local tostring =			_G.tostring
 local tonumber =			_G.tonumber
-local GetConVarNumber =		_G.GetConVarNumber
+local GetConVarNumber =			_G.GetConVarNumber
 local pairs =				_G.pairs
 local IsValid =				_G.IsValid
 local print =				_G.print
@@ -22,12 +22,6 @@ local LocalPlayer =			_G.LocalPlayer
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
-
-
-local function InitBillardHack()
-	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
-	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
-end
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -304,38 +298,42 @@ hook.Add( "Think", "BillardHack_PanicModeReminder", function()
 	end
 end )
 
-CreateClientConVar( "billardhack_panic_mode", 0, true, false )
-CreateClientConVar( "billardhack_panic_mode_spam_time", 5, true, false )
-CreateClientConVar( "billardhack_rage_mode", 0, true, false )
-CreateClientConVar( "billardhack_crosshair", 0, true, false )
-CreateClientConVar( "billardhack_crosshair_r", 255, true, false )
-CreateClientConVar( "billardhack_crosshair_g", 50, true, false )
-CreateClientConVar( "billardhack_crosshair_b", 50, true, false )
-CreateClientConVar( "billardhack_crosshair_alpha", 200, true, false )
-CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
-CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
-CreateClientConVar( "billardhack_wallhack", 0, true, false )
-CreateClientConVar( "billardhack_wallhack_npcs", 0, true, false )
-CreateClientConVar( "billardhack_aimbot", 0, true, false )
-CreateClientConVar( "billardhack_triggerbot", 0, true, false )
-CreateClientConVar( "billardhack_bots_target_npcs", 0, true, false )
-CreateClientConVar( "billardhack_bhop", 0, true, false )
-CreateClientConVar( "billardhack_esp", 0, true, false )
-CreateClientConVar( "billardhack_esp_info", 0, true, false )
-CreateClientConVar( "billardhack_esp_boxes", 0, true, false )
-CreateClientConVar( "billardhack_hud", 0, true, false )
-CreateClientConVar( "billardhack_hud_health", 0, true, false )
-CreateClientConVar( "billardhack_hud_armor", 0, true, false )
-CreateClientConVar( "billardhack_draw_self", 0, true, false )
+local function InitConVars()
+	CreateClientConVar( "billardhack_panic_mode", 0, true, false )
+	CreateClientConVar( "billardhack_panic_mode_spam_time", 5, true, false )
+	CreateClientConVar( "billardhack_rage_mode", 0, true, false )
+	CreateClientConVar( "billardhack_crosshair", 0, true, false )
+	CreateClientConVar( "billardhack_crosshair_r", 255, true, false )
+	CreateClientConVar( "billardhack_crosshair_g", 50, true, false )
+	CreateClientConVar( "billardhack_crosshair_b", 50, true, false )
+	CreateClientConVar( "billardhack_crosshair_alpha", 200, true, false )
+	CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
+	CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
+	CreateClientConVar( "billardhack_wallhack", 0, true, false )
+	CreateClientConVar( "billardhack_wallhack_npcs", 0, true, false )
+	CreateClientConVar( "billardhack_aimbot", 0, true, false )
+	CreateClientConVar( "billardhack_triggerbot", 0, true, false )
+	CreateClientConVar( "billardhack_bots_target_npcs", 0, true, false )
+	CreateClientConVar( "billardhack_bhop", 0, true, false )
+	CreateClientConVar( "billardhack_esp", 0, true, false )
+	CreateClientConVar( "billardhack_esp_info", 0, true, false )
+	CreateClientConVar( "billardhack_esp_boxes", 0, true, false )
+	CreateClientConVar( "billardhack_hud", 0, true, false )
+	CreateClientConVar( "billardhack_hud_health", 0, true, false )
+	CreateClientConVar( "billardhack_hud_armor", 0, true, false )
+	CreateClientConVar( "billardhack_draw_self", 0, true, false )
+end
 
-concommand.Add( "billardhack_trace_entity", GetAllTraceEntity )
-concommand.Add( "billardhack_trace_texture", GetAllTraceTexture )
-concommand.Add( "billardhack_trace_pos", GetAllTracePos )
-concommand.Add( "billardhack_friend_add", AddToFriends )
-concommand.Add( "billardhack_friend_remove", RemoveFromFriends )
-concommand.Add( "billardhack_friend_list", ListAllFriends )
-concommand.Add( "billardhack_teams", GetPlayerTeams )
-concommand.Add( "billardhack_tick", RemoveFromFriends )
+local function InitConCommands()
+	concommand.Add( "billardhack_trace_entity", GetAllTraceEntity )
+	concommand.Add( "billardhack_trace_texture", GetAllTraceTexture )
+	concommand.Add( "billardhack_trace_pos", GetAllTracePos )
+	concommand.Add( "billardhack_friend_add", AddToFriends )
+	concommand.Add( "billardhack_friend_remove", RemoveFromFriends )
+	concommand.Add( "billardhack_friend_list", ListAllFriends )
+	concommand.Add( "billardhack_teams", GetPlayerTeams )
+	concommand.Add( "billardhack_tick", RemoveFromFriends )
+end
 
 -- Custom cheats section
 
@@ -367,5 +365,12 @@ CreateClientConVar( "billardhack_murder_esp", 0, true, false )
 concommand.Add( "billardhack_murder_list", IdentifyMurderers )
 
 -- Initialize
+
+local function InitBillardHack() -- Put it in a function for extra swag points
+	InitConCommands()
+	InitConVars()
+	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
+	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
+end
 
 InitBillardHack()
