@@ -9,7 +9,6 @@ local XP.Reward.KillPlayer = 60 --XP reward for killing a player
 local XP.Reward.KillNPC = 10 --XP reward for killing an NPC
 local XP.Penalty.Death = 0 --No penalty for dying
 
-
 local XP.SetPlayerXP = function( ply, xp )
 	if not IsValid( ply ) then return end
 	local PlyID = ply:SteamID()
