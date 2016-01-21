@@ -18,25 +18,21 @@ local olivescript.keywords = {
 }
 
 local olivescript.compile = function( code )
-	local timeStarted = tonumber ( os.time() )
+	local timeStarted = tonumber ( os.clock() )
 	if not code then return end
 	local newcode = tostring( code )
 	for k, v in pairs( olivescript.keywords ) do
-		string.gsub( code, k, v )
+		string.gsub( tostring( code ), tostring( k ), tostring( v ) )
 	end
-	local timeEnded = tonumber( os.time() )
-	local timeTaken = tonumber( os.difftime( timeStarted, timeEnded ) )
-	print( "Compiled Olivescript into Lua in " .. timeTaken .. " seconds." )
+	print( "Compiled Olivescript into Lua in " .. tonumber( os.clock() ) - timeStarted  .. " seconds." )
 end
 
 local olivescript.decompile = function( code )
-	local timeStarted = tonumber ( os.time() )
+	local timeStarted = tonumber ( os.clock() )
 	if not code then return end
 	local newcode = tostring( code )
 	for k, v in pairs( olivescript.keywords ) do
-		string.gsub( code, v, k )
+		string.gsub( tostring( code ), tostring( v ), tostring( k ) )
 	end
-	local timeEnded = tonumber( os.time() )
-	local timeTaken = tonumber( os.difftime( timeStarted, timeEnded ) )
-	print( "Compiled Lua into Olivescript in " .. timeTaken .. " seconds." )
+	print( "Compiled Lua into Olivescript in " .. tonumber( os.clock() ) - timeStarted  .. " seconds." )
 end
