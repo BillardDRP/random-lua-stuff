@@ -9,17 +9,18 @@ public Plugin:myinfo =
 	url = "www.google.com"
 };
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	HookEvent("player_hurt", Event_PlayerHurt);
 }
  
-public Action:Event_PlayerHurt( player_hurt, "OneHitKnivesHook", false )
+public Action:Event_PlayerHurt( char player_hurt[], char "OneHitKnivesHook", false )
 {
 
-	string WeaponUsed = event.GetString( "weapon" )
-	if WeaponUsed == "weapon_knife" then
+	char[] WeaponUsed = event.GetString( "weapon" )
+	if (WeaponUsed == "weapon_knife")
+	{
 	
-	end
+	}
 
 }
