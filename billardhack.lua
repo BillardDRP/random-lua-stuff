@@ -24,6 +24,7 @@ math.randomseed( os.time() ) -- For the extra paranoid
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
+local PreWallhackEnts = {}
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -152,19 +153,23 @@ local function GetPlayerTeams( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "HUDPaint", tostring( math.random( 1, 2000 ) ), function()
-	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
-	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
-		local red = GetConVarNumber( "billardhack_crosshair_r" )
-		local green = GetConVarNumber( "billardhack_crosshair_g" )
-		local blue = GetConVarNumber( "billardhack_crosshair_b" )
-		local alph = GetConVarNumber( "billardhack_crosshair_alpha" )
-		local size = GetConVarNumber( "billardhack_crosshair_size" )
-		local thickness = GetConVarNumber( "billardhack_crosshair_thickness" )
-		draw.RoundedBox( 2, ( ScrW() / 2 ) - ( size / 2 ), ScrH() / 2, size, thickness, Color( red, green, blue, alph ) )
-		draw.RoundedBox( 2, ScrW() / 2, ( ScrH() / 2 ) - ( size / 2 ), thickness, size, Color( red, green, blue, alph ) )
-	end
-end )
+local function UpdateWallhackTable()
+	PreWallhackEnts = {
+		AllPlayers = player.GetAll()
+		Printers1 = ents.FindByClass( "money_printer_*" )
+		Printers2 = ents.FindByClass( "*_money_printer" )
+		Miners = ents.FindByClass( "bit_miner_*" )
+		SpawnedItems = ents.FindByClass( "spawned_*" )
+		Items = ents.FindByClass( "item_*" )
+		CityRP = ents.FindByClass( "cityrp_*" )
+		Keypads = ents.FindByClass( "keypad" )
+		Weapons = ents.FindByClass( "weapon_*" )
+		M9K = ents.FindByClass( "m9k_*" )
+		PropVehicles = ents.FindByClass( "prop_vehicle_*" )
+		Vehicles = ents.FindByClass( "vehicle_*" )
+		NPCs = ents.FindByClass( "npc_*" )
+	}
+end
 
 hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -184,6 +189,20 @@ hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
 		if tobool( GetConVarNumber( "billardhack_wallhack_npcs" ) ) then
 			halo.Add( ents.FindByClass( "npc_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
 		end
+	end
+end )
+
+hook.Add( "HUDPaint", tostring( math.random( 1, 2000 ) ), function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
+	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
+		local red = GetConVarNumber( "billardhack_crosshair_r" )
+		local green = GetConVarNumber( "billardhack_crosshair_g" )
+		local blue = GetConVarNumber( "billardhack_crosshair_b" )
+		local alph = GetConVarNumber( "billardhack_crosshair_alpha" )
+		local size = GetConVarNumber( "billardhack_crosshair_size" )
+		local thickness = GetConVarNumber( "billardhack_crosshair_thickness" )
+		draw.RoundedBox( 2, ( ScrW() / 2 ) - ( size / 2 ), ScrH() / 2, size, thickness, Color( red, green, blue, alph ) )
+		draw.RoundedBox( 2, ScrW() / 2, ( ScrH() / 2 ) - ( size / 2 ), thickness, size, Color( red, green, blue, alph ) )
 	end
 end )
 
@@ -312,6 +331,7 @@ local function InitConVars()
 	CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
 	CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
 	CreateClientConVar( "billardhack_wallhack", 0, true, false )
+	CreateClientConVar( "billardhack_wallhack_refresh_rate", 15, true, false )
 	CreateClientConVar( "billardhack_wallhack_npcs", 0, true, false )
 	CreateClientConVar( "billardhack_aimbot", 0, true, false )
 	CreateClientConVar( "billardhack_triggerbot", 0, true, false )
