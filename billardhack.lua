@@ -152,7 +152,7 @@ local function GetPlayerTeams( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "HUDPaint", tostring( math.random( 1, 2000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
 		local red = GetConVarNumber( "billardhack_crosshair_r" )
@@ -166,7 +166,7 @@ hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add( "PreDrawHalos", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
 		halo.Add( player.GetAll(), Color( 255, 0, 0 ), 0, 0, 2, true, true )
@@ -187,7 +187,7 @@ hook.Add( "PreDrawHalos", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add("Think", tostring( math.random( 1, 1337 ) ), function()
+hook.Add("Think", tostring( math.random( 4001, 6000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_aimbot" ) ) then
 		local ply = LocalPlayer()
@@ -204,7 +204,7 @@ hook.Add("Think", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add("Think", tostring( math.random( 1, 1337 ) ), function()
+hook.Add("Think", tostring( math.random( 6001, 8000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_triggerbot" ) ) then
 		local ply = LocalPlayer()
@@ -220,7 +220,7 @@ hook.Add("Think", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add( "CreateMove", tostring( math.random( 1, 1337 ) ), function( ucmd )
+hook.Add( "CreateMove", tostring( math.random( 8001, 10000 ) ), function( ucmd )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
 		if ucmd:KeyDown( IN_JUMP ) then
@@ -231,7 +231,7 @@ hook.Add( "CreateMove", tostring( math.random( 1, 1337 ) ), function( ucmd )
 	end
 end )
 
-hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "HUDPaint", tostring( math.random( 10001, 12000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
@@ -270,7 +270,7 @@ hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "HUDPaint", tostring( math.random( 12001, 14000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_hud" ) ) then
 		local health = LocalPlayer():Health()
@@ -285,12 +285,12 @@ hook.Add( "HUDPaint", tostring( math.random( 1, 1337 ) ), function()
 	end
 end )
 
-hook.Add( "ShouldDrawLocalPlayer", tostring( math.random( 1, 1337 ) ), function( ply )
+hook.Add( "ShouldDrawLocalPlayer", tostring( math.random( 14001, 16000 ) ), function( ply )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	return tobool( GetConVarNumber( "billardhack_draw_self" ) )
 end )
 
-hook.Add( "Think", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
 	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
 		if PanicModeSpamTime <= CurTime() then
@@ -353,7 +353,7 @@ local function IdentifyMurderers( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "PreDrawHalos", tostring( math.random( 1, 1337 ) ), function()
+hook.Add( "PreDrawHalos", tostring( math.random( 18001, 20000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_murder_esp" ) ) then
 		halo.Add( ents.FindByClass( "weapon_mu_knife" ), Color( 255, 0, 0 ), 0, 0, 2, true, true )
 		halo.Add( ents.FindByClass( "weapon_mu_magnum" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
