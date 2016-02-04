@@ -25,6 +25,8 @@ local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
 local WallhackEnts = {}
+local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+local WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -312,7 +314,6 @@ hook.Add( "ShouldDrawLocalPlayer", tostring( math.random( 14001, 16000 ) ), func
 end )
 
 hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
-	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
 		if PanicModeSpamTime <= CurTime() then
 			chat.AddText( PanicChatColor, "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
@@ -322,7 +323,13 @@ hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
 end )
 
 hook.Add( "Think", tostring( math.random( 18001, 20000 ), function()
-
+	local Spam = WallhackSpamTime
+	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
+		if WallhackSpamTime <= CurTime() then
+			print( "BillardHack wallhack has been updated." )
+			WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
+		end
+	end
 end )
 
 local function InitConVars()
