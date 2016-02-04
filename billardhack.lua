@@ -154,21 +154,23 @@ local function GetPlayerTeams( ply, cmd, args )
 end
 
 local function UpdateWallhackTable()
-	WallhackEnts = {
-		AllPlayers = player.GetAll()
-		Printers1 = ents.FindByClass( "money_printer_*" )
-		Printers2 = ents.FindByClass( "*_money_printer" )
-		Miners = ents.FindByClass( "bit_miner_*" )
-		SpawnedItems = ents.FindByClass( "spawned_*" )
-		Items = ents.FindByClass( "item_*" )
-		CityRP = ents.FindByClass( "cityrp_*" )
-		Keypads = ents.FindByClass( "keypad" )
-		Weapons = ents.FindByClass( "weapon_*" )
-		M9K = ents.FindByClass( "m9k_*" )
-		PropVehicles = ents.FindByClass( "prop_vehicle_*" )
-		Vehicles = ents.FindByClass( "vehicle_*" )
-		NPCs = ents.FindByClass( "npc_*" )
-	}
+	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
+		WallhackEnts = {
+			AllPlayers = player.GetAll()
+			Printers1 = ents.FindByClass( "money_printer_*" )
+			Printers2 = ents.FindByClass( "*_money_printer" )
+			Miners = ents.FindByClass( "bit_miner_*" )
+			SpawnedItems = ents.FindByClass( "spawned_*" )
+			Items = ents.FindByClass( "item_*" )
+			CityRP = ents.FindByClass( "cityrp_*" )
+			Keypads = ents.FindByClass( "keypad" )
+			Weapons = ents.FindByClass( "weapon_*" )
+			M9K = ents.FindByClass( "m9k_*" )
+			PropVehicles = ents.FindByClass( "prop_vehicle_*" )
+			Vehicles = ents.FindByClass( "vehicle_*" )
+			NPCs = ents.FindByClass( "npc_*" )
+		}
+	end
 end
 
 hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
@@ -319,6 +321,10 @@ hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
 	end
 end )
 
+hook.Add( "Think", tostring( math.random( 18001, 20000 ), function()
+
+end )
+
 local function InitConVars()
 	CreateClientConVar( "billardhack_panic_mode", 0, true, false )
 	CreateClientConVar( "billardhack_panic_mode_spam_time", 5, true, false )
@@ -373,12 +379,23 @@ local function IdentifyMurderers( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "PreDrawHalos", tostring( math.random( 18001, 20000 ) ), function()
+local MurderWallhackEnts = {}
+
+local function UpdateMurderWallhackTable()
+	MurderWallhackEnts = {
+		MurderKnife = ents.FindByClass( "weapon_mu_knife" )
+		MurderMagnum = ents.FindByClass( "weapon_mu_magnum" )
+		MurderKnifeDropped = ents.FindByClass( "mu_knife" )
+		MurderLoot = ents.FindByClass( "mu_loot" )
+	}
+end
+
+hook.Add( "PreDrawHalos", tostring( math.random( 20001, 22001 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_murder_esp" ) ) then
-		halo.Add( ents.FindByClass( "weapon_mu_knife" ), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "weapon_mu_magnum" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "mu_knife" ), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "mu_loot" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderKnife, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderMagnum, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderKnifeDropped, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderLoot, Color( 0, 255, 0 ), 0, 0, 2, true, true )
 	end
 end )
 
@@ -391,6 +408,7 @@ concommand.Add( "billardhack_murder_list", IdentifyMurderers )
 local function InitBillardHack() -- Put it in a function for extra swag points
 	InitConCommands()
 	InitConVars()
+	UpdateWallhackTable()
 	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
 end
