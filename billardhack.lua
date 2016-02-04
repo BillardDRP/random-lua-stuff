@@ -24,7 +24,7 @@ math.randomseed( os.time() ) -- For the extra paranoid
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
-local PreWallhackEnts = {}
+local WallhackEnts = {}
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -154,7 +154,7 @@ local function GetPlayerTeams( ply, cmd, args )
 end
 
 local function UpdateWallhackTable()
-	PreWallhackEnts = {
+	WallhackEnts = {
 		AllPlayers = player.GetAll()
 		Printers1 = ents.FindByClass( "money_printer_*" )
 		Printers2 = ents.FindByClass( "*_money_printer" )
@@ -174,20 +174,20 @@ end
 hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
-		halo.Add( player.GetAll(), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "money_printer_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "bit_miner_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "*_money_printer" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "spawned_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "item_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "cityrp_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "keypad" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "weapon_*" ), Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "m9k_*" ), Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "prop_vehicle_*" ), Color( 255, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "vehicle_*" ), Color( 255, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.AllPlayers, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Printers1, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Miners, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Printers2, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.SpawnedItems, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Items, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.CityRP, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Keypads, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Weapons, Color( 255, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.M9K, Color( 255, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.PropVehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Vehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
 		if tobool( GetConVarNumber( "billardhack_wallhack_npcs" ) ) then
-			halo.Add( ents.FindByClass( "npc_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
+			halo.Add( WallhackEnts.NPCs, Color( 0, 0, 255 ), 0, 0, 2, true, true )
 		end
 	end
 end )
