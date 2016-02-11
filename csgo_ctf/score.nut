@@ -8,6 +8,21 @@ function ResetScores() {
 	Score_CT = 0;
 }
 
+function ShowScores() {
+	ScriptPrintMessageChatAll("The current score is:");
+	ScriptPrintMessageChatAll("T: " + Score_T + " CT: " + Score_CT);
+}
+
+function GetScore(team) {
+	if (team == "T") {
+		return Score_T;
+	} else if (team == "CT") {
+		return Score_CT;
+	} else {
+		ThrowError("GetScore expected valid team, got null team ID!");
+	}
+}
+
 function IncrementScore(team, amount) {
 	if not (amount == 0) {
 		if (team == "T") {
