@@ -1,0 +1,1 @@
+--Rewriting the scratchcards module to make it slightly less shitty.
