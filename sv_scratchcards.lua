@@ -1,3 +1,5 @@
+--UPDATE: This script uses an old and tedious way of storing data in files. There will be a rewrite with database usage soon!
+
 local ScratchCards = {}
 local ScratchCards.Win = {}
 local ScratchCards.CardPrice = 600
