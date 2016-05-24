@@ -24,6 +24,9 @@ math.randomseed( os.time() ) -- For the extra paranoid
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
+local WallhackEnts = {}
+local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+local WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -152,7 +155,48 @@ local function GetPlayerTeams( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
+local function UpdateWallhackTable()
+	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
+		WallhackEnts = {
+			AllPlayers = player.GetAll()
+			Printers1 = ents.FindByClass( "money_printer_*" )
+			Printers2 = ents.FindByClass( "*_money_printer" )
+			Miners = ents.FindByClass( "bit_miner_*" )
+			SpawnedItems = ents.FindByClass( "spawned_*" )
+			Items = ents.FindByClass( "item_*" )
+			CityRP = ents.FindByClass( "cityrp_*" )
+			Keypads = ents.FindByClass( "keypad" )
+			Weapons = ents.FindByClass( "weapon_*" )
+			M9K = ents.FindByClass( "m9k_*" )
+			PropVehicles = ents.FindByClass( "prop_vehicle_*" )
+			Vehicles = ents.FindByClass( "vehicle_*" )
+			NPCs = ents.FindByClass( "npc_*" )
+		}
+	end
+end
+
+hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
+	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
+	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
+		halo.Add( WallhackEnts.AllPlayers, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Printers1, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Miners, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Printers2, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.SpawnedItems, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Items, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.CityRP, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Keypads, Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Weapons, Color( 255, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.M9K, Color( 255, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.PropVehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( WallhackEnts.Vehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
+		if tobool( GetConVarNumber( "billardhack_wallhack_npcs" ) ) then
+			halo.Add( WallhackEnts.NPCs, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		end
+	end
+end )
+
+hook.Add( "HUDPaint", tostring( math.random( 1, 2000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_crosshair" ) ) then
 		local red = GetConVarNumber( "billardhack_crosshair_r" )
@@ -166,28 +210,7 @@ hook.Add( "HUDPaint", "BillardHack_Crosshair", function()
 	end
 end )
 
-hook.Add( "PreDrawHalos", "BillardHack_Wallhack", function()
-	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
-	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
-		halo.Add( player.GetAll(), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "money_printer_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "bit_miner_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "*_money_printer" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "spawned_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "item_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "cityrp_*" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "keypad" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "weapon_*" ), Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "m9k_*" ), Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "prop_vehicle_*" ), Color( 255, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "vehicle_*" ), Color( 255, 255, 0 ), 0, 0, 2, true, true )
-		if tobool( GetConVarNumber( "billardhack_wallhack_npcs" ) ) then
-			halo.Add( ents.FindByClass( "npc_*" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		end
-	end
-end )
-
-hook.Add("Think", "BillardHack_Aimbot", function()
+hook.Add("Think", tostring( math.random( 4001, 6000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_aimbot" ) ) then
 		local ply = LocalPlayer()
@@ -204,7 +227,7 @@ hook.Add("Think", "BillardHack_Aimbot", function()
 	end
 end )
 
-hook.Add("Think", "BillardHack_Triggerbot", function()
+hook.Add("Think", tostring( math.random( 6001, 8000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_triggerbot" ) ) then
 		local ply = LocalPlayer()
@@ -220,7 +243,7 @@ hook.Add("Think", "BillardHack_Triggerbot", function()
 	end
 end )
 
-hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
+hook.Add( "CreateMove", tostring( math.random( 8001, 10000 ) ), function( ucmd )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_bhop" ) ) then
 		if ucmd:KeyDown( IN_JUMP ) then
@@ -231,7 +254,7 @@ hook.Add( "CreateMove", "BillardHack_Bhop", function( ucmd )
 	end
 end )
 
-hook.Add( "HUDPaint", "BillardHack_ESP", function()
+hook.Add( "HUDPaint", tostring( math.random( 10001, 12000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_esp" ) ) then
 		if tobool( GetConVarNumber( "billardhack_esp_info" ) ) then
@@ -270,7 +293,7 @@ hook.Add( "HUDPaint", "BillardHack_ESP", function()
 	end
 end )
 
-hook.Add( "HUDPaint", "BillardHack_HUD", function()
+hook.Add( "HUDPaint", tostring( math.random( 12001, 14000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_hud" ) ) then
 		local health = LocalPlayer():Health()
@@ -285,17 +308,26 @@ hook.Add( "HUDPaint", "BillardHack_HUD", function()
 	end
 end )
 
-hook.Add( "ShouldDrawLocalPlayer", "BillardHack_DrawSelf", function( ply )
+hook.Add( "ShouldDrawLocalPlayer", tostring( math.random( 14001, 16000 ) ), function( ply )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	return tobool( GetConVarNumber( "billardhack_draw_self" ) )
 end )
 
-hook.Add( "Think", "BillardHack_PanicModeReminder", function()
-	local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then
 		if PanicModeSpamTime <= CurTime() then
 			chat.AddText( PanicChatColor, "PANIC MODE IS ENABLED, TYPE 'BILLARDHACK_PANIC_MODE 0' IN CONSOLE TO DISABLE" )
 			PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
+		end
+	end
+end )
+
+hook.Add( "Think", tostring( math.random( 18001, 20000 ), function()
+	local Spam = WallhackSpamTime
+	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
+		if WallhackSpamTime <= CurTime() then
+			print( "BillardHack wallhack has been updated." )
+			WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
 		end
 	end
 end )
@@ -312,6 +344,7 @@ local function InitConVars()
 	CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
 	CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
 	CreateClientConVar( "billardhack_wallhack", 0, true, false )
+	CreateClientConVar( "billardhack_wallhack_refresh_rate", 15, true, false )
 	CreateClientConVar( "billardhack_wallhack_npcs", 0, true, false )
 	CreateClientConVar( "billardhack_aimbot", 0, true, false )
 	CreateClientConVar( "billardhack_triggerbot", 0, true, false )
@@ -353,12 +386,23 @@ local function IdentifyMurderers( ply, cmd, args )
 	print( "========================================" )
 end
 
-hook.Add( "PreDrawHalos", "BillardHack_MurderHack", function()
+local MurderWallhackEnts = {}
+
+local function UpdateMurderWallhackTable()
+	MurderWallhackEnts = {
+		MurderKnife = ents.FindByClass( "weapon_mu_knife" )
+		MurderMagnum = ents.FindByClass( "weapon_mu_magnum" )
+		MurderKnifeDropped = ents.FindByClass( "mu_knife" )
+		MurderLoot = ents.FindByClass( "mu_loot" )
+	}
+end
+
+hook.Add( "PreDrawHalos", tostring( math.random( 20001, 22001 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_murder_esp" ) ) then
-		halo.Add( ents.FindByClass( "weapon_mu_knife" ), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "weapon_mu_magnum" ), Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "mu_knife" ), Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( ents.FindByClass( "mu_loot" ), Color( 0, 255, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderKnife, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderMagnum, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderKnifeDropped, Color( 255, 0, 0 ), 0, 0, 2, true, true )
+		halo.Add( MurderWallhackEnts.MurderLoot, Color( 0, 255, 0 ), 0, 0, 2, true, true )
 	end
 end )
 
@@ -371,6 +415,7 @@ concommand.Add( "billardhack_murder_list", IdentifyMurderers )
 local function InitBillardHack() -- Put it in a function for extra swag points
 	InitConCommands()
 	InitConVars()
+	UpdateWallhackTable()
 	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
 end
