@@ -6,7 +6,7 @@
 
 -- Helper functions
 
-local function FindPlayer( name )
+local function FindPlayer( name ) -- THIS FUNCTIONS KILLS BABIES. All you really need is string.lower(find(string.lower(player:Nick()))
 	name = string.lower( name )
 	for k,v in pairs( player.GetAll() ) do
 		if string.lower( v:SteamID() ) == name then
