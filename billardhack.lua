@@ -341,6 +341,7 @@ hook.Add( "Think", tostring( math.random( 16001, 18000 ) ), function()
 	end
 end )
 
+--[[
 hook.Add( "Think", tostring( math.random( 18001, 20000 ), function()
 	local Spam = WallhackSpamTime
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
@@ -350,6 +351,7 @@ hook.Add( "Think", tostring( math.random( 18001, 20000 ), function()
 		end
 	end
 end )
+]]
 
 local function InitConVars()
 	CreateClientConVar( "billardhack_panic_mode", 0, true, false )
@@ -407,7 +409,6 @@ end
 
 --[[
 local MurderWallhackEnts = {}
-
 local function UpdateMurderWallhackTable()
 	MurderWallhackEnts = {
 		MurderKnife = ents.FindByClass( "weapon_mu_knife" )
@@ -416,7 +417,6 @@ local function UpdateMurderWallhackTable()
 		MurderLoot = ents.FindByClass( "mu_loot" )
 	}
 end
-
 hook.Add( "PreDrawHalos", tostring( math.random( 20001, 22001 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_murder_esp" ) ) then
 		halo.Add( MurderWallhackEnts.MurderKnife, Color( 255, 0, 0 ), 0, 0, 2, true, true )
