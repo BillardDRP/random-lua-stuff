@@ -24,9 +24,9 @@ math.randomseed( os.time() ) -- For the extra paranoid
 local ChatColor = Color( 0, 255, 180, 255 )
 local PanicChatColor = Color( 255, 0, 0, 255 )
 local FriendsList = {}
-local WallhackEnts = {}
+--local WallhackEnts = {}
 local PanicModeSpamTime = CurTime() + GetConVarNumber( "billardhack_panic_mode_spam_time" )
-local WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
+--local WallhackSpamTime = CurTime() + GetConVarNumber( "billardhack_wallhack_refresh_rate" )
 
 local function FindPlayer( name )
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
@@ -155,6 +155,7 @@ local function GetPlayerTeams( ply, cmd, args )
 	print( "========================================" )
 end
 
+--[[
 local function UpdateWallhackTable()
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
 		WallhackEnts = {
@@ -174,25 +175,43 @@ local function UpdateWallhackTable()
 		}
 	end
 end
+]]
+
+local WallhackEntList = {
+	["AllPlayers"] = player.GetAll(),
+	["Printers1"] = ents.FindByClass( "money_printer_*" ),
+	["Printers2"] = ents.FindByClass( "*_money_printer" ),
+	["Miners"] = ents.FindByClass( "bit_miner_*" ),
+	["SpawnedItems"] = ents.FindByClass( "spawned_*" ),
+	["Items"] = ents.FindByClass( "item_*" ),
+	["CityRP"] = ents.FindByClass( "cityrp_*" ),
+	["Ent"] = ents.FindByClass( "ent_*" ),
+	["Billard"] = ents.FindByClass( "billard_*" ),
+	["BCraft"] = ents.FindByClass( "bcraft_*" ),
+	["Keypads"] = ents.FindByClass( "keypad" ),
+	["Weapons"] = ents.FindByClass( "weapon_*" ),
+	["M9K"] = ents.FindByClass( "m9k_*" ),
+	["PropVehicles"] = ents.FindByClass( "prop_vehicle_*" ),
+	["Vehicles"] = ents.FindByClass( "vehicle_*" ),
+	["MurderWeapon"] = ents.FindByClass( "weapon_mu_*" ),
+	["MurderEnt"] = ents.FindByClass( "mu_*" ),
+	["NPCs"] = ents.FindByClass( "npc_*" )
+}
 
 hook.Add( "PreDrawHalos", tostring( math.random( 2001, 4000 ) ), function()
 	if tobool( GetConVarNumber( "billardhack_panic_mode" ) ) then return end
 	if tobool( GetConVarNumber( "billardhack_wallhack" ) ) then
-		halo.Add( WallhackEnts.AllPlayers, Color( 255, 0, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Printers1, Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Miners, Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Printers2, Color( 0, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.SpawnedItems, Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Items, Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.CityRP, Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Keypads, Color( 0, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Weapons, Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.M9K, Color( 255, 0, 255 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.PropVehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
-		halo.Add( WallhackEnts.Vehicles, Color( 255, 255, 0 ), 0, 0, 2, true, true )
-		if tobool( GetConVarNumber( "billardhack_wallhack_npcs" ) ) then
-			halo.Add( WallhackEnts.NPCs, Color( 0, 0, 255 ), 0, 0, 2, true, true )
+		
+		local WallhackEnts = {}
+		
+		for k, v in pairs(WallhackEntList) do
+			if k == "NPCs" and !tobool(GetConVarNumber("billardhack_wallhack_npcs")) then return end
+			for k2, v2 in pairs(v) do
+				table.insert(WallhackEnts, v2)
+			end
 		end
+		
+		halo.Add( WallhackEnts, Color( 255, 0, 0 ), 0, 0, 2, true, true )
 	end
 end )
 
@@ -344,7 +363,7 @@ local function InitConVars()
 	CreateClientConVar( "billardhack_crosshair_size", 30, true, false )
 	CreateClientConVar( "billardhack_crosshair_thickness", 4, true, false )
 	CreateClientConVar( "billardhack_wallhack", 0, true, false )
-	CreateClientConVar( "billardhack_wallhack_refresh_rate", 15, true, false )
+	--CreateClientConVar( "billardhack_wallhack_refresh_rate", 15, true, false )
 	CreateClientConVar( "billardhack_wallhack_npcs", 0, true, false )
 	CreateClientConVar( "billardhack_aimbot", 0, true, false )
 	CreateClientConVar( "billardhack_triggerbot", 0, true, false )
@@ -386,6 +405,7 @@ local function IdentifyMurderers( ply, cmd, args )
 	print( "========================================" )
 end
 
+--[[
 local MurderWallhackEnts = {}
 
 local function UpdateMurderWallhackTable()
@@ -405,8 +425,9 @@ hook.Add( "PreDrawHalos", tostring( math.random( 20001, 22001 ) ), function()
 		halo.Add( MurderWallhackEnts.MurderLoot, Color( 0, 255, 0 ), 0, 0, 2, true, true )
 	end
 end )
+]]
 
-CreateClientConVar( "billardhack_murder_esp", 0, true, false )
+--CreateClientConVar( "billardhack_murder_esp", 0, true, false )
 
 concommand.Add( "billardhack_murder_list", IdentifyMurderers )
 
@@ -415,7 +436,7 @@ concommand.Add( "billardhack_murder_list", IdentifyMurderers )
 local function InitBillardHack() -- Put it in a function for extra swag points
 	InitConCommands()
 	InitConVars()
-	UpdateWallhackTable()
+	--UpdateWallhackTable()
 	Derma_Message( "BillardHack has been successfully loaded!", "BilllardHack", "Close" )
 	chat.AddText( ChatColor, "BillardHack has been successfully loaded!" )
 end
